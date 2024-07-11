@@ -1,10 +1,11 @@
 require("dotenv").config();
 import mongoose, { Document, Model, Schema } from "mongoose";
+import { IUser } from "./userModel";
 
 interface IComment extends Document {
-  user: object;
-  comment: string;
-  commentReplies?: IComment[];
+  user: IUser;
+  question: string;
+  questionReplies?: IComment[];
 }
 
 interface IReview extends Document {
@@ -30,6 +31,7 @@ interface ICourseData extends Document {
   links: ILink[];
   suggestion: string;
   questions: IComment[];
+//  questionReplies: IComment[];
 }
 
 interface ICourse extends Document {
@@ -65,8 +67,8 @@ const linkSchema = new Schema<ILink>({
 
 const commentSchema = new Schema<IComment>({
   user: Object,
-  comment: String,
-  commentReplies: [Object],
+  question: String,
+  questionReplies: [Object],
 });
 
 const courseDataSchema = new Schema<ICourseData>({
@@ -79,6 +81,7 @@ const courseDataSchema = new Schema<ICourseData>({
   links: [linkSchema],
   suggestion: String,
   questions: [commentSchema],
+ // questionReplies: [commentSchema],
 });
 
 const courseSchema = new Schema<ICourse>({
