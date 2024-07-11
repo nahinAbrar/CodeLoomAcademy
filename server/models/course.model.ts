@@ -71,7 +71,6 @@ const commentSchema = new Schema<IComment>({
 
 const courseDataSchema = new Schema<ICourseData>({
   videoUrl: String,
-  videoThumbnail: Object,
   title: String,
   videoSection: String,
   description: String,
@@ -99,13 +98,13 @@ const courseSchema = new Schema<ICourse>({
   estimatedPrice: {
     type: Number,
   },
+
+  // required true in front end time
   thumbnail: {
     public_id: {
-      required: true,
       type: String,
     },
     url: {
-      required: true,
       type: String,
     },
   },
@@ -138,7 +137,6 @@ const courseSchema = new Schema<ICourse>({
     default: 0,
   },
 });
-
 
 const CourseModel: Model<ICourse> = mongoose.model("Course", courseSchema);
 
