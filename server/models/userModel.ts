@@ -1,5 +1,5 @@
 require("dotenv").config();
-import mongoose, { Document, Model, mongo, Schema } from "mongoose";
+import mongoose, { Document, Model, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
