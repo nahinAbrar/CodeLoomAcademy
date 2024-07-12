@@ -8,7 +8,7 @@ import { CatchAsyncError } from "../middleware/catchAsyncErrors";
 import ejs from "ejs";
 import path from "path";
 import sendMail from "../utils/sendMail";
-import { newOrder } from "../services/order.service";
+import { getAllOrderService, newOrder } from "../services/order.service";
 
 //create order
 export const createOrder = CatchAsyncError(
@@ -95,6 +95,18 @@ export const createOrder = CatchAsyncError(
     } catch (error: any) {
       console.log("ERROROROROR", 500);
       return next(new ErrorHandler(error.message, 500));
+    }
+  }
+);
+
+
+// get all order for admin
+export const getAllOrdersAdmin = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      getAllOrderService(res);
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
     }
   }
 );
