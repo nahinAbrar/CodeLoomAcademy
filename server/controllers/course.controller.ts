@@ -10,6 +10,7 @@ import mongoose from "mongoose";
 import ejs from "ejs";
 import path from "path";
 import sendMail from "../utils/sendMail";
+import NotificationModel from "../models/notificationModel";
 
 // upload course
 export const uploadCourse = CatchAsyncError(
@@ -209,6 +210,12 @@ export const addQuestion = CatchAsyncError(
       //add this questions to our course content
       courseContent.questions.push(newQuestion);
 
+      await NotificationModel.create({
+        user: req.user._id,
+        title: "New Question Received",
+        message: `You Have a new Question from ${courseContent?.title}`,
+      });
+
       //save
       await course?.save();
 
@@ -273,6 +280,11 @@ export const addAnswer = CatchAsyncError(
 
       if (req.user?._id === question.user._id) {
         // add notification
+        await NotificationModel.create({
+          user: req.user._id,
+          title: "New Question Reply Received",
+          message: `You Have a new Question Reply from ${courseContent?.title}`,
+        });
       } else {
         const data = {
           name: question.user.name,
@@ -402,7 +414,7 @@ export const addReplyToReview = CatchAsyncError(
         comment,
       };
 
-      if(!review.commentReplies){
+      if (!review.commentReplies) {
         review.commentReplies = [];
       }
 
