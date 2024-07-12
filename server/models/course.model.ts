@@ -31,7 +31,7 @@ interface ICourseData extends Document {
   links: ILink[];
   suggestion: string;
   questions: IComment[];
-//  questionReplies: IComment[];
+  //  questionReplies: IComment[];
 }
 
 interface ICourse extends Document {
@@ -82,65 +82,68 @@ const courseDataSchema = new Schema<ICourseData>({
   links: [linkSchema],
   suggestion: String,
   questions: [commentSchema],
- // questionReplies: [commentSchema],
+  // questionReplies: [commentSchema],
 });
 
-const courseSchema = new Schema<ICourse>({
-  name: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
+const courseSchema = new Schema<ICourse>(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
 
-  price: {
-    type: Number,
-    required: true,
-  },
-  estimatedPrice: {
-    type: Number,
-  },
+    price: {
+      type: Number,
+      required: true,
+    },
+    estimatedPrice: {
+      type: Number,
+    },
 
-  // required true in front end time
-  thumbnail: {
-    public_id: {
+    // required true in front end time
+    thumbnail: {
+      public_id: {
+        type: String,
+      },
+      url: {
+        type: String,
+      },
+    },
+
+    tags: {
+      required: true,
       type: String,
     },
-    url: {
+
+    level: {
       type: String,
+      required: true,
+    },
+
+    demoUrl: {
+      type: String,
+      required: true,
+    },
+
+    benefits: [{ title: String }],
+    prerequisites: [{ title: String }],
+    reviews: [reviewSchema],
+    courseData: [courseDataSchema],
+    ratings: {
+      type: Number,
+      default: 0,
+    },
+    purchased: {
+      type: Number,
+      default: 0,
     },
   },
-
-  tags: {
-    required: true,
-    type: String,
-  },
-
-  level: {
-    type: String,
-    required: true,
-  },
-
-  demoUrl: {
-    type: String,
-    required: true,
-  },
-
-  benefits: [{ title: String }],
-  prerequisites: [{ title: String }],
-  reviews: [reviewSchema],
-  courseData: [courseDataSchema],
-  ratings: {
-    type: Number,
-    default: 0,
-  },
-  purchased: {
-    type: Number,
-    default: 0,
-  },
-});
+  { timestamps: true }
+);
 
 const CourseModel: Model<ICourse> = mongoose.model("Course", courseSchema);
 

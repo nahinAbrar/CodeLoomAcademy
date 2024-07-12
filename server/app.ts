@@ -7,6 +7,7 @@ import userRouter from "./routes/userRoute";
 import courseRouter from "./routes/course.route";
 import orderRouter from "./routes/order.route";
 import notificationRouter from "./routes/notification.route";
+import analyticsRouter from "./routes/analytics.route";
 
 export const app = express();
 
@@ -24,19 +25,7 @@ app.use(
 );
 
 // routes
-
-// user route
-app.use("/api/v1", userRouter);
-
-// course route
-
-app.use("/api/v1", courseRouter);
-
-// order route
-app.use("/api/v1", orderRouter);
-
-// notification route
-app.use("/api/v1", notificationRouter);
+app.use("/api/v1", userRouter, courseRouter, orderRouter, notificationRouter, analyticsRouter);
 
 // testing api
 app.get("/test", (req: Request, res: Response, next: NextFunction) => {
