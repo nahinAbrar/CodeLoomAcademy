@@ -1,4 +1,4 @@
-import { Montserrat, Rethink_Sans } from "next/font/google";
+import { Montserrat, Rethink_Sans, Poppins } from "next/font/google";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -7,11 +7,12 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode:["class"],
   theme: {
     extend: {
       fontFamily: {
         Montserrat: ["var(--font-Montserrat)"],
-        Rethink_Sans: ["var(--font-Rethink"],
+        Poppins: ["var(--font-Poppins"],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
