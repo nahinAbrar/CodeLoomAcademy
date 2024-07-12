@@ -97,7 +97,7 @@ export const getSingleCourse = CatchAsyncError(
         );
 
         console.log("hitting mongodb");
-        await redis.set(courseId, JSON.stringify(course));
+        await redis.set(courseId, JSON.stringify(course), 'EX', 604800);
 
         res.status(200).json({
           success: true,
@@ -129,7 +129,7 @@ export const getAllCourse = CatchAsyncError(
         );
 
         console.log("hitting mongodb");
-        await redis.set("allCourses", JSON.stringify(courses));
+        await redis.set("allCourses", JSON.stringify(courses), 'EX', 604800);
 
         res.status(200).json({
           success: true,
