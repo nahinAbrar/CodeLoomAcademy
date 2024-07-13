@@ -96,15 +96,17 @@ const Login: FC<Props> = ({ setRoute }) => {
 
                         )
                     }
-                    {
-                        errors.password && touched.password && (
-                            <span className='text-red-500 pt-2 block'>
-                                {errors.password}
-                            </span>
-                        )
-                    }
+
 
                 </div>
+
+                {
+                    errors.password && touched.password && (
+                        <span className='text-red-500 pt-2 block'>
+                            {errors.password}
+                        </span>
+                    )
+                }
 
 
                 {/*Submit Button*/}
