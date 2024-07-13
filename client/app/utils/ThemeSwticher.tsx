@@ -5,8 +5,6 @@ import { useState, useEffect } from "react"
 import { useTheme } from 'next-themes'
 import { BiMoon, BiSun } from 'react-icons/bi';
 
-type Props = {}
-
 const ThemeSwticher = () => {
     const [mounted, setMounted] = useState(false);
     const { theme, setTheme } = useTheme();

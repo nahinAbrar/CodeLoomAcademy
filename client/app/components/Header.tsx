@@ -44,7 +44,7 @@ const Header: FC<Props> = ({ activeItem, setOpen }) => {
                                 href={"/"}
                                 className={`text-[25px] font-Montserrat font-500 text-black dark:text-white`}
                             >
-                                Educatum Academy
+                                Educatum
                             </Link>
                         </div>
                         <div className='flex items-center'>
@@ -66,7 +66,7 @@ const Header: FC<Props> = ({ activeItem, setOpen }) => {
 
                             <HiOutlineUserCircle
                                 size={25}
-                                className='cursor-pointer dark:text-white text-black'
+                                className='hidden 800px:block cursor-pointer dark:text-white text-black'
                                 onClick={() => setOpen(true)}
                             />
                         </div>
@@ -78,11 +78,12 @@ const Header: FC<Props> = ({ activeItem, setOpen }) => {
                 {
                     openSidebar && (
                         <div
-                            className='fixed w-full h-screen top-0 left-0 z-[9999] dark:bg-[unset] bg-[#00000024]' onClick={handleClose}
+                            className='fixed w-full h-screen top-0 left-0 z-[9999] dark:bg-[unset] bg-[#00000024]'
+                            onClick={handleClose}
                             id='screen'
                         >
 
-                            <div className='w-[70%] fixed z-[9999] h-screen bg-white dark:bg-slate-900 dark:bg-opacity-90 top-0 right-0'>
+                            <div className='w-[70%] fixed z-[9999] h-screen bg-white dark:bg-slate-900 dark:bg-opacity-90 top-0 right-0 flex flex-col justify-center text-left gap-10'>
                                 <NavItems
                                     activeItem={activeItem}
                                     isMobile={true}
@@ -100,9 +101,6 @@ const Header: FC<Props> = ({ activeItem, setOpen }) => {
                                 </p>
 
                             </div>
-
-
-
                         </div>
 
                     )

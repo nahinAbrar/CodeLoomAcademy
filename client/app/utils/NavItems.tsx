@@ -26,7 +26,7 @@ export const navItemsData = [
 
 type Props = {
     activeItem: number,
-    isMobile: number,
+    isMobile: boolean,
 }
 
 const NavItems: React.FC<Props> = ({ activeItem, isMobile }) => {
@@ -55,18 +55,19 @@ const NavItems: React.FC<Props> = ({ activeItem, isMobile }) => {
                 isMobile && (
                     <div className='800px:hidden mt-5'>
 
-                        <div className='w-full text-center py-6'>
+                        {/* LOGO */}
+                        <div className='w-full text-left py-6 mb-10 px-6'>
                             <Link
                                 href="/"
                                 passHref
                             >
                                 <span className={`text-[25px] font-Montserrat font-[500] text-black dark:text-white`}>
-                                    Educatum Academy
+                                    Educatum
                                 </span>
 
                             </Link>
-
                         </div>
+
 
                         {navItemsData &&
                             navItemsData.map((i, index) => (
@@ -83,7 +84,6 @@ const NavItems: React.FC<Props> = ({ activeItem, isMobile }) => {
                                 </Link>
                             ))
                         }
-
                     </div>
                 )
             }
