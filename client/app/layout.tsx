@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
-import { Montserrat, Rethink_Sans, Poppins } from "next/font/google";
+"use client"
+import { Montserrat, Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./utils/theme-provider";
 import { Toaster } from "react-hot-toast";
+import { Providers } from "./Provider";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -24,10 +25,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${montserrat.variable} ${poppins.variable} !bg-white bg-no-repeat dark:bg-gradient-to-b dark:from-gray-900 dark:to-black duration-300`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Toaster position="top-center" reverseOrder={false} />
-          {children}
-        </ThemeProvider>
+        <Providers>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <Toaster position="top-center" reverseOrder={false} />
+            {children}
+          </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );
