@@ -3,8 +3,9 @@ import Image from 'next/image'
 import { styles } from '../../../app/styles/style'
 import { AiOutlineCamera } from 'react-icons/ai'
 import avatarIcon from "../../../public/assets/avatar.png"
-import { useUpdateAvatarMutation } from '@/redux/features/user/userApi'
+import { useEditProfileMutation, useUpdateAvatarMutation } from '@/redux/features/user/userApi'
 import { useLoadUserQuery } from '@/redux/features/api/apiSlice'
+import toast from 'react-hot-toast'
 
 type Props = {
     avatar: string | null;
@@ -14,6 +15,7 @@ type Props = {
 const ProfileInfo: FC<Props> = ({ avatar, user }) => {
     const [name, setName] = useState(user && user.name);
     const [updateAvatar, { isSuccess, error }] = useUpdateAvatarMutation();
+    const [editProfile, { isSuccess: editSuccess, error: editError }] = useEditProfileMutation();
     const [loadUser, setLoadUser] = useState(false);
     const { } = useLoadUserQuery(undefined, { skip: loadUser ? false : true });
 
@@ -32,19 +34,36 @@ const ProfileInfo: FC<Props> = ({ avatar, user }) => {
 
     useEffect(() => {
 
-        if (isSuccess) {
+        if (isSuccess || editSuccess) {
             setLoadUser(true)
+            if (editSuccess) {
+                toast.success("Name Updated!");
+            }
+            if(isSuccess){
+                toast.success("Picture Updated");
+            }
         }
-        if (error) {
+        if (error || editError) {
             console.log(error)
+            if(error){
+                toast.error("Reload and Try Uploading Picture Again!")
+            }
+            if(editError){
+                toast.error("Reload and Try Updating Name Again!")
+            }
         }
 
-    }, [isSuccess, error])
+    }, [isSuccess, error, editSuccess, editError])
 
 
 
     const handleSubmit = async (e: any) => {
-        console.log("submit");
+        e.preventDefault();
+        if (name !== "") {
+            await editProfile({
+                name: name,
+            })
+        }
     }
 
     return (
