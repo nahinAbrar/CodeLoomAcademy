@@ -23,8 +23,10 @@ const SidebarProfile: FC<Props> = ({ user, active, avatar, setActive, logOutHand
                 onClick={() => setActive(1)}>
 
                 <Image
-                    src={user.avatar || avatar ? user.avatar || avatar : avatarDefault}
+                    src={user.avatar || avatar ? user.avatar.url || avatar : avatarDefault}
                     alt='avatar'
+                    width={20}
+                    height={20}
                     className='w-[20px] h-[20px] 800px:w-[20px] 800px:h-[20px] cursor-pointer rounded-full'
                 />
 
