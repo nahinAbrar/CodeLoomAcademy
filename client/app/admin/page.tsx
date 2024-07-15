@@ -3,6 +3,7 @@ import React from 'react'
 import Heading from '../utils/Heading'
 import AdminSidebar from '../components/Admin/Sidebar/AdminSidebar'
 import AdminProtected from '../hooks/adminProtected'
+import DashboardHero from '../components/Admin/DashboardHero'
 
 
 type Props = {}
@@ -27,7 +28,8 @@ const page = (props: Props) => {
                     </div>
 
                     <div className='w-[85%]'>
-
+                        
+                        <DashboardHero />
                     </div>
 
                 </div>
