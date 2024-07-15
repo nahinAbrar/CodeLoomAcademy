@@ -20,7 +20,7 @@ const Profile: FC<Props> = (props) => {
         <div>
             <Protected>
                 <Heading
-                    title={`${user?.name} 's Profile`}
+                    title={`${user?.name} 's Profile -Educatum`}
                     description="Bla Bla"
                     keywords="VARSITY,"
                 />
