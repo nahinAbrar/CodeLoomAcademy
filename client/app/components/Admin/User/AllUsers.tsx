@@ -23,12 +23,12 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
     const { isLoading, data, refetch } = useGetAllUserQuery({},{refetchOnMountOrArgChange:true});
     const [userId, setUserId] = useState('');
     const [email, setEmail] = useState('');
-    const [role, setRole] = useState('user');
+    const [role, setRole] = useState('admin');
     const [open, setOpen] = useState(false);
     const [updateUserRole, { isSuccess: updateSuccess, error: updateError }] = useUpdateUserRoleMutation();
     const [deleteUser, { isSuccess: deleteSuccess, error: deleteError }] = useDeleteUserMutation();
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (role:any) => {
         await updateUserRole({ email, role });
     }
 
@@ -240,8 +240,10 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
                                         />
 
                                         <select
-                                            name="" id="" title='selector'
+                                            name="role" id="role" title='selector'
+                                            value={role}
                                             className={`${styles.input} !mt-6`}
+                                            onChange={(e) => setRole(e.target.value)}
                                         >
                                             <option value="admin">Admin</option>
                                             <option value="user">User</option>
@@ -250,7 +252,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
                                         <button
                                             type='submit'
                                             className={`${styles.button} !mt-2`}
-                                            onClick={handleSubmit}
+                                            onClick={() => handleSubmit(role)}
                                         >
                                             Submit
                                         </button>
