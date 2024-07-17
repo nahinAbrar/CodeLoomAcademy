@@ -5,8 +5,8 @@ import { updateAccessToken } from "../controllers/userController";
 
 const orderRouter = express.Router();
 
-orderRouter.post("/create-order",updateAccessToken, isAutheticated, createOrder);
+orderRouter.post("/create-order", isAutheticated, createOrder);
 
-orderRouter.get("/get-order",updateAccessToken, isAutheticated, authorizeRoles("admin"), getAllOrdersAdmin);
+orderRouter.get("/get-order", isAutheticated, authorizeRoles("admin"), getAllOrdersAdmin);
 
 export default orderRouter;

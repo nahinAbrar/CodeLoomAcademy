@@ -215,7 +215,7 @@ export const updateAccessToken = CatchAsyncError(
       const session = await redis.get(decoded.id as string);
 
       if (!session) {
-        return next(new ErrorHandler('Login To Access', 400));
+        return next(new ErrorHandler("Login To Access", 400));
       }
 
       const user = JSON.parse(session);
@@ -243,7 +243,7 @@ export const updateAccessToken = CatchAsyncError(
 
       await redis.set(user._id, JSON.stringify(user), "EX", 604800); //7 day expiry
 
-      next()
+      next();
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
@@ -297,11 +297,9 @@ interface IUpdateUserInfo {
 export const updateUserInfo = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const {name} = req.body as IUpdateUserInfo;
+      const { name } = req.body as IUpdateUserInfo;
       const userId = req.user?._id;
       const user = await userModel.findById(userId);
-
-
 
       if (name && user) {
         user.name = name;
@@ -435,9 +433,19 @@ export const getAllUsersAdmin = CatchAsyncError(
 export const updateUserRole = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { id, role } = req.body;
+      const { email, role } = req.body;
 
-      updateUserRoleService(res, id, role);
+      const isUserExist = await userModel.findOne({ email });
+
+      if (isUserExist) {
+        const id = isUserExist.id;
+        updateUserRoleService(res, id, role);
+      } else {
+        res.status(400).json({
+          success: false,
+          message: "User not found",
+        });
+      }
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }

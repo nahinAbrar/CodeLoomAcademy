@@ -1,12 +1,16 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { DataGrid } from "@mui/x-data-grid"
-import { Box, Button } from "@mui/material"
+import { Box, Button, Modal } from "@mui/material"
 import { AiOutlineDelete, AiOutlineMail } from 'react-icons/ai'
 import { useTheme } from 'next-themes'
 import { BsPencil } from 'react-icons/bs'
 import Loader from '../../Loader/Loader'
 import { format } from "timeago.js"
-import { useGetAllUserQuery } from '@/redux/features/user/userApi'
+import { useDeleteUserMutation, useGetAllUserQuery, useUpdateUserRoleMutation } from '@/redux/features/user/userApi'
+import { styles } from '@/app/styles/style'
+import { updateUserRole, deleteUser } from '../../../../../server/controllers/userController';
+import toast from 'react-hot-toast'
+
 
 
 type Props = {
@@ -15,8 +19,55 @@ type Props = {
 
 const AllUsers: FC<Props> = ({ isTeam }) => {
     const { theme, setTheme } = useTheme();
+    const [active, setActive] = useState(false);
+    const { isLoading, data, refetch } = useGetAllUserQuery({},{refetchOnMountOrArgChange:true});
+    const [userId, setUserId] = useState('');
+    const [email, setEmail] = useState('');
+    const [role, setRole] = useState('user');
+    const [open, setOpen] = useState(false);
+    const [updateUserRole, { isSuccess: updateSuccess, error: updateError }] = useUpdateUserRoleMutation();
+    const [deleteUser, { isSuccess: deleteSuccess, error: deleteError }] = useDeleteUserMutation();
 
-    const { isLoading, data, error } = useGetAllUserQuery({});
+    const handleSubmit = async () => {
+        await updateUserRole({ email, role });
+    }
+
+    const handleDelete = async () => {
+        const id = userId;
+        await deleteUser(id)
+    }
+
+    useEffect(() => {
+        if (updateError) {
+            if ("data" in updateError) {
+                const errorMessage = updateError as any;
+                toast.error(errorMessage.data.message);
+            }
+        }
+
+        if (updateSuccess) {
+            refetch();
+            toast.success("User Role Updated!!");
+            setActive(false);
+        }
+
+        if (deleteSuccess) {
+            refetch();
+            toast.success("User Deleted Successfully");
+            setOpen(false);
+        }
+
+        if (deleteError) {
+            if ("data" in deleteError) {
+                const errorMessage = deleteError as any;
+                toast.error(errorMessage.data.message);
+            }
+        }
+
+
+    }, [updateError, updateSuccess, deleteSuccess, deleteError])
+
+
 
     const columns = [
         { field: "id", headerName: "ID", flex: 0.6 },
@@ -32,7 +83,12 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
             renderCell: (params: any) => {
                 return (
                     <>
-                        <Button>
+                        <Button
+                            onClick={() => {
+                                setOpen(!open);
+                                setUserId(params.row.id);
+                            }}
+                        >
                             <AiOutlineDelete
                                 className='dark:text-white text-black'
                                 size={20}
@@ -65,7 +121,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
     const rows: any = []
 
     if (isTeam) {
-        const newData = data && data.users.filter((item:any) => item.role === "admin");
+        const newData = data && data.users.filter((item: any) => item.role === "admin");
         newData && newData.forEach((item: any) => {
             rows.push({
                 id: item._id,
@@ -99,6 +155,14 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
                     <Loader />
                 ) : (
                     <Box m="20px">
+                        {isTeam && (
+                            <div className='w-full flex justify-end' onClick={() => setActive(!active)}>
+                                <div className={`${styles.button} !w-[220px]`}>
+                                    Add New Member
+                                </div>
+                            </div>
+                        )
+                        }
                         <Box m="40px 0 0 0"
                             height="80vh"
                             sx={{
@@ -153,6 +217,88 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
                         >
                             <DataGrid checkboxSelection rows={rows} columns={columns} />
                         </Box>
+                        {active && (
+
+                            <Modal
+                                open={active}
+                                onClose={() => setActive(!active)}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                            >
+                                <Box className="absolute top-[40%] left-[50%] -translate-x-1/2 w-[450px] bg-white dark:bg-slate-900 rounded-[8px] shadow p-4 outline-none">
+                                    <h1 className={`${styles.title}`}>
+                                        Add New Member
+                                    </h1>
+
+                                    <div className='mt-4 flex-col items-center justify-center'>
+                                        <input
+                                            type="email"
+                                            placeholder='Enter Email..'
+                                            className={`${styles.input}`}
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                        />
+
+                                        <select
+                                            name="" id="" title='selector'
+                                            className={`${styles.input} !mt-6`}
+                                        >
+                                            <option value="admin">Admin</option>
+                                            <option value="user">User</option>
+                                        </select>
+
+                                        <button
+                                            type='submit'
+                                            className={`${styles.button} !mt-2`}
+                                            onClick={handleSubmit}
+                                        >
+                                            Submit
+                                        </button>
+
+
+                                    </div>
+                                </Box>
+
+                            </Modal>
+                        )}
+
+                        {open && (
+                            <Modal
+                                open={open}
+                                onClose={() => setOpen(!open)}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                            >
+                                <Box className="absolute top-[40%] left-[50%] -translate-x-1/2 w-[450px] bg-white dark:bg-slate-900 rounded-[8px] shadow p-4 outline-none">
+                                    <h1 className={`${styles.title}`}>
+                                        Sure You Want to delete this user?
+                                    </h1>
+
+                                    <div className='w-full mt-4 flex justify-between text-white gap-4'>
+                                        <button
+                                            type='submit'
+                                            className={`${styles.button} !mt-2 !w-[120px]`}
+                                            onClick={() => setOpen(!open)}
+                                        >
+                                            Cancel
+                                        </button>
+
+                                        <button
+                                            type='submit'
+                                            className={`${styles.button} !mt-2 !bg-[crimson] !w-[120px]`}
+                                            onClick={handleDelete}
+                                        >
+                                            Delete
+                                        </button>
+
+
+                                    </div>
+                                </Box>
+
+                            </Modal>
+                        )
+
+                        }
                     </Box>
                 )
             }
