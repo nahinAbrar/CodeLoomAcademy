@@ -43,8 +43,10 @@ export const editCourse = CatchAsyncError(
     try {
       const data = req.body;
       const thumbnail = data.thumbnail;
+      const courseId = req.params.id;
+      const courseData = (await CourseModel.findById(courseId)) as any;
 
-      if (thumbnail) {
+      if (thumbnail && !thumbnail.startsWith("https")) {
         await cloudinary.v2.uploader.destroy(thumbnail.public_id);
 
         const myCloud = await cloudinary.v2.uploader.upload(thumbnail, {
@@ -57,7 +59,12 @@ export const editCourse = CatchAsyncError(
         };
       }
 
-      const courseId = req.params.id;
+      if (thumbnail.startsWith("https")) {
+        data.thumbnail = {
+          public_id: courseData?.thumbnail.public_id,
+          url: courseData?.thumbnail.url,
+        };
+      }
 
       const course = await CourseModel.findByIdAndUpdate(
         courseId,
@@ -98,7 +105,7 @@ export const getSingleCourse = CatchAsyncError(
         );
 
         console.log("hitting mongodb");
-        await redis.set(courseId, JSON.stringify(course), 'EX', 604800);
+        await redis.set(courseId, JSON.stringify(course), "EX", 604800);
 
         res.status(200).json({
           success: true,
@@ -130,7 +137,7 @@ export const getAllCourse = CatchAsyncError(
         );
 
         console.log("hitting mongodb");
-        await redis.set("allCourses", JSON.stringify(courses), 'EX', 604800);
+        await redis.set("allCourses", JSON.stringify(courses), "EX", 604800);
 
         res.status(200).json({
           success: true,
@@ -445,7 +452,6 @@ export const addReplyToReview = CatchAsyncError(
   }
 );
 
-
 // get all course for admin
 export const getAllCoursesAdmin = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -466,7 +472,9 @@ export const deleteCourse = CatchAsyncError(
       const course = await CourseModel.findById(id);
 
       if (!course) {
-        return next(new ErrorHandler("Course Not found || Invalid Course id", 404));
+        return next(
+          new ErrorHandler("Course Not found || Invalid Course id", 404)
+        );
       }
 
       await course.deleteOne({ id });
@@ -484,22 +492,24 @@ export const deleteCourse = CatchAsyncError(
 );
 
 // GENERATE VIDEO URL IN EVERY REFRESH
-export const generateVideoUrl = CatchAsyncError(async(req:Request, res:Response, next:NextFunction)=>{
-  try{
-    const {videoId} = req.body;
-    const response = await axios.post(
-      `https://dev.vdocipher.com/api/videos/${videoId}/otp`,
-      {ttl:300},
-      {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Apisecret ${process.env.VDOCIPHER_API_SECRET}`
-        },
-      }
-    )
-    res.json(response.data);
-  }catch (error: any) {
-    return next(new ErrorHandler(error.message, 400));
+export const generateVideoUrl = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { videoId } = req.body;
+      const response = await axios.post(
+        `https://dev.vdocipher.com/api/videos/${videoId}/otp`,
+        { ttl: 300 },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Apisecret ${process.env.VDOCIPHER_API_SECRET}`,
+          },
+        }
+      );
+      res.json(response.data);
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
   }
-})
+);

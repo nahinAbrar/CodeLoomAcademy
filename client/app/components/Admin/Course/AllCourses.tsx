@@ -1,20 +1,47 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { DataGrid } from "@mui/x-data-grid"
-import { Box, Button } from "@mui/material"
+import { Box, Button, Modal } from "@mui/material"
 import { AiOutlineDelete } from 'react-icons/ai'
 import { useTheme } from 'next-themes'
 import { BsPencil } from 'react-icons/bs'
-import { useGetAllCoursesQuery } from '@/redux/features/courses/coursesApi'
+import { useDeleteCourseMutation, useGetAllCoursesQuery } from '@/redux/features/courses/coursesApi'
 import Loader from '../../Loader/Loader'
-import {format} from "timeago.js"
+import { format } from "timeago.js"
+import { styles } from '@/app/styles/style'
+import { deleteCourse } from '../../../../../server/controllers/course.controller';
+import toast from 'react-hot-toast'
+import Link from 'next/link'
 
 
 type Props = {}
 
 const AllCourses = (props: Props) => {
     const { theme, setTheme } = useTheme();
+    const [open, setOpen] = useState(false);
+    const [courseId, setCourseId] = useState('');
+    const { isLoading, data, refetch } = useGetAllCoursesQuery({}, { refetchOnMountOrArgChange: true });
+    const [deleteCourse, { isSuccess: deleteSuccess, error: deleteError }] = useDeleteCourseMutation({});
 
-    const { isLoading, data, error } = useGetAllCoursesQuery({});
+
+    const handleDelete = async () => {
+        const id = courseId;
+        deleteCourse(id);
+    }
+
+    useEffect(() => {
+        if (deleteSuccess) {
+            refetch();
+            toast.success("Course Deleted Successfully.");
+            setOpen(!open);
+        }
+        if (deleteError) {
+            if ("data" in deleteError) {
+                const errorMessage = deleteError as any;
+                toast.error(errorMessage.data.message);
+                setOpen(!open);
+            }
+        }
+    }, [deleteSuccess, deleteError])
 
     const columns = [
         { field: "id", headerName: "ID", flex: 0.5 },
@@ -29,12 +56,14 @@ const AllCourses = (props: Props) => {
             renderCell: (params: any) => {
                 return (
                     <>
-                        <Button>
-                            <BsPencil
-                                className='dark:text-white text-black'
-                                size={20}
-                            />
-                        </Button>
+                        <div className='flex mt-4 justify-center'>
+                            <Link href={`/admin/edit-course/${params.row.id}`}>
+                                <BsPencil
+                                    className='dark:text-white text-black'
+                                    size={20}
+                                />
+                            </Link>
+                        </div>
                     </>
                 )
             }
@@ -46,7 +75,11 @@ const AllCourses = (props: Props) => {
             renderCell: (params: any) => {
                 return (
                     <>
-                        <Button>
+                        <Button
+                            onClick={() => {
+                                setOpen(!open);
+                                setCourseId(params.row.id);
+                            }}>
                             <AiOutlineDelete
                                 className='dark:text-white text-black'
                                 size={20}
@@ -57,7 +90,7 @@ const AllCourses = (props: Props) => {
             }
         }
     ]
-    const rows:any = []
+    const rows: any = []
     {
         data && data.courses.forEach((item: any) => {
             rows.push({
@@ -132,6 +165,43 @@ const AllCourses = (props: Props) => {
                         >
                             <DataGrid checkboxSelection rows={rows} columns={columns} />
                         </Box>
+                        {open && (
+                            <Modal
+                                open={open}
+                                onClose={() => setOpen(!open)}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                            >
+                                <Box className="absolute top-[40%] left-[50%] -translate-x-1/2 w-[450px] bg-white dark:bg-slate-900 rounded-[8px] shadow p-4 outline-none">
+                                    <h1 className={`${styles.title}`}>
+                                        Sure You Want to delete this Course?
+                                    </h1>
+
+                                    <div className='w-full mt-4 flex justify-between text-white gap-4'>
+                                        <button
+                                            type='submit'
+                                            className={`${styles.button} !mt-2 !w-[120px]`}
+                                            onClick={() => setOpen(!open)}
+                                        >
+                                            Cancel
+                                        </button>
+
+                                        <button
+                                            type='submit'
+                                            className={`${styles.button} !mt-2 !bg-[crimson] !w-[120px]`}
+                                            onClick={handleDelete}
+                                        >
+                                            Delete
+                                        </button>
+
+
+                                    </div>
+                                </Box>
+
+                            </Modal>
+                        )
+
+                        }
                     </Box>
                 )
             }

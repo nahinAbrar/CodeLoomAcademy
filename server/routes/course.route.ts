@@ -20,7 +20,7 @@ const courseRouter = express.Router();
 
 courseRouter.post(
   "/create-course",
-
+  updateAccessToken,
   isAutheticated,
   authorizeRoles("admin"),
   uploadCourse
@@ -28,6 +28,7 @@ courseRouter.post(
 
 courseRouter.put(
   "/edit-course/:id",
+  updateAccessToken,
   isAutheticated,
   authorizeRoles("admin"),
   editCourse
