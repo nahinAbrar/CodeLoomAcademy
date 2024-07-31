@@ -1,4 +1,4 @@
-import { styles } from '@/app/styles/style';
+import { styles } from '../../../../app/styles/style';
 import { useEditLayoutMutation, useGetHeroDataQuery } from '@/redux/features/layout/layoutApi';
 import React, { FC, useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
