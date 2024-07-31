@@ -9,7 +9,7 @@ layoutRouter.post("/create-layout", isAutheticated, authorizeRoles("admin"), cre
 
 layoutRouter.put("/edit-layout", isAutheticated, authorizeRoles("admin"), editLayout);
 
-layoutRouter.get("/get-layout", getLayoutByType);
+layoutRouter.get("/get-layout/:type", getLayoutByType);
 
 
 export default layoutRouter;
