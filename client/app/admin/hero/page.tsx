@@ -8,6 +8,7 @@ import EditHero from '@/app/components/Admin/Customization/EditHero'
 type Props = {}
 
 const page = (props: Props) => {
+    
     return (
         <div>
             <AdminProtected>
