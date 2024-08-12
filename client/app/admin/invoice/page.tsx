@@ -1,15 +1,13 @@
 "use client"
 import React from 'react'
-import Heading from '../utils/Heading'
-import AdminSidebar from '../components/Admin/Sidebar/AdminSidebar'
-import AdminProtected from '../hooks/adminProtected'
-import DashboardHero from '../components/Admin/DashboardHero'
-
-
+import DashboardHero from '@/app/components/Admin/DashboardHero'
+import Heading from '@/app/utils/Heading'
+import Sidebar from '@/app/components/Admin/Sidebar/AdminSidebar'
+import AdminProtected from '@/app/hooks/adminProtected'
+import AllInvoices from '@/app/components/Admin/Order/AllInvoices'
 type Props = {}
 
 const page = (props: Props) => {
-    
     return (
         <div>
             <AdminProtected>
@@ -19,19 +17,16 @@ const page = (props: Props) => {
                     keywords="Educatum"
                 />
 
-                <div className='flex h-[200vh]'>
 
+                <div className='flex max-h-screen'>
                     <div className='1500px:w-[16%] w-1/5'>
-
-                        <AdminSidebar />
-
+                        <Sidebar />
                     </div>
 
                     <div className='w-[85%]'>
-                        
-                        <DashboardHero isDashboard={true} />
+                        <DashboardHero />
+                        <AllInvoices />
                     </div>
-
                 </div>
             </AdminProtected>
         </div>
