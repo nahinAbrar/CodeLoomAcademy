@@ -297,7 +297,7 @@ const Sidebar = () => {
 
                         <Item
                             title="Order Analytics"
-                            to="/admin/order-analytics"
+                            to="/admin/orders-analytics"
                             icon={<MapOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
@@ -305,7 +305,7 @@ const Sidebar = () => {
 
                         <Item
                             title="User Analytics"
-                            to="/admin/user-analytics"
+                            to="/admin/users-analytics"
                             icon={<ManageHistoryIcon />}
                             selected={selected}
                             setSelected={setSelected}
