@@ -1,7 +1,12 @@
+import { styles } from '@/app/styles/style'
+import CoursePlayer from '@/app/utils/CoursePlayer'
 import Ratings from '@/app/utils/Ratings'
+import Link from 'next/link'
 import React from 'react'
 import { IoCheckmarkDoneOutline } from 'react-icons/io5'
 import { useSelector } from 'react-redux'
+import { format } from 'timeago.js'
+import CourseContentList from './CourseContentList'
 
 type Props = {
     data: any
@@ -20,7 +25,10 @@ const CourseDetails = ({ data }: Props) => {
     return (
         <div>
             <div className='w-[90%] 800px:w-[90%] m-auto py-5'>
+
                 <div className='w-full flex flex-col-reverse 800px:flex-row'>
+
+                    {/*LEFT*/}
                     <div className='w-full 800px:w-[65%] 800px:pr-5'>
 
                         <h1 className='text-[25px] font-Montserrat font-[600] text-black dark:text-white'>
@@ -85,7 +93,11 @@ const CourseDetails = ({ data }: Props) => {
                                 Course Overview
                             </h1>
 
-                            {/*Course Content List*/}
+                            {/*Course Content List -- Hardest Part*/}
+                            <CourseContentList
+                                data={data?.courseData}
+                                isDemo={true}
+                            />
 
                         </div>
                         <br />
@@ -112,12 +124,93 @@ const CourseDetails = ({ data }: Props) => {
                                     Course Rating || {data?.reviews?.length} Reviews
                                 </h5>
                             </div>
+                            <br />
+                            {(data?.reviews && [...data.reviews].reverse()).map((item: any, index: number) => (
+                                <div className='w-full pb-4' key={index}>
+                                    <div className='flex'>
+                                        <div className='w-[50px] h-[50px]'>
+                                            <div className='w-[50px] h-[50px] bg-slate-600 rounded-[50px] flex items-center justify-center cursor-pointer'>
 
+                                                <h1 className='uppercase text-[18px] text-black dark:text-white'>
+                                                    {item.user.name.slice(0, 2)}
+                                                </h1>
+
+                                            </div>
+                                        </div>
+                                        <div className='hidden 800px:block pl-2'>
+                                            <div className='flex items-center'>
+
+                                                <h5 className='text-[18px] text-black dark:text-white pr-2'>
+                                                    {item.user.name}
+                                                </h5>
+                                                <Ratings rating={item.rating} />
+                                            </div>
+                                            <p className='text-black dark:text-white'>{item.comment}</p>
+                                            <small className='text-[#000000d1] dark:text-[#ffffff83]'>
+                                                {format(item.createdAt)}
+                                            </small>
+                                        </div>
+                                        <div className='pl-2 flex 800px:hidden items-center'>
+                                            <h5 className='text-[18px] text-black dark:text-white pr-2'>
+                                                {item.user.name}
+                                            </h5>
+                                            <Ratings rating={item.rating} />
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
 
 
                     </div>
+
+                    {/*RIGHT*/}
+                    <div className='w-full 800px:w-[35%] relative'>
+                        <div className='sticky top-[100px] left-0 z-50 w-full'>
+                            <CoursePlayer
+                                videoUrl={data?.demoUrl}
+                                title={data?.title}
+                            />
+                            <div className='flex items-center'>
+                                <h1 className='pt-5 text-[25px] text-black dark:text-white'>
+                                    {data.price === 0 ? "Free" : data.price + "$"}
+                                </h1>
+
+                                <h5 className='pl-3 text-[20px] mt-2 line-through opacity-80 text-black dark:text-white'>
+                                    {data.estimatedPrice}$
+                                </h5>
+
+                                <h4 className='pl-5 pt-4 text-[22px] text-black dark:text-white'>
+                                    {discountPercentagePrice}% Off
+                                </h4>
+                            </div>
+                            <div className='flex items-center'>
+                                {isPurchased ? (
+                                    <Link
+                                        className={`${styles.button} !w-[180px] my-3 font-sans cursor-pointer !bg-[crimson] text-white`}
+                                        href={`course-access/${data._id}`}
+                                    >
+                                        Enter to Course
+                                    </Link>
+                                ) : (
+                                    <div className={`${styles.button} !w-[180px] my-3 font-sans cursor-pointer !bg-[crimson] text-white`}
+                                        onClick={handleOrder}>
+                                        Buy Now {data.price}$
+                                    </div>
+                                )
+
+                                }
+                            </div>
+                            <br />
+                            <p className='pb-1 text-black dark:text-white font-Montserrat'>* Source Code Included</p>
+                            <p className='pb-1 text-black dark:text-white font-Montserrat'>* Lifetime Access</p>
+                            <p className='pb-3 800px:pb-1 text-black dark:text-white font-Montserrat'>* Premium Support</p>
+                        </div>
+                    </div>
                 </div>
+
+
+
             </div>
         </div>
     )

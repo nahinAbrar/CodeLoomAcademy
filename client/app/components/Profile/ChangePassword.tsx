@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import { styles } from '../../../app/styles/style'
 import { useUpdatePasswordMutation } from '@/redux/features/user/userApi';
-import { updatePassword } from '../../../../server/controllers/userController';
+import { updatePassword } from '../../../../server/controllers/user.controller';
 import toast from 'react-hot-toast';
 
 type Props = {}

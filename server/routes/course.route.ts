@@ -14,7 +14,7 @@ import {
   uploadCourse,
 } from "../controllers/course.controller";
 import { authorizeRoles, isAutheticated } from "../middleware/auth";
-import { updateAccessToken } from "../controllers/userController";
+import { updateAccessToken } from "../controllers/user.controller";
 
 const courseRouter = express.Router();
 

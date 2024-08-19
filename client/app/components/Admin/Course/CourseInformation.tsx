@@ -190,9 +190,9 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
 
                         <select aria-label='categorySelector'
                             className={`${styles.input}`}
-                            value={courseInfo.category}
+                            value={courseInfo.categories}
                             onChange={(e: any) =>
-                                setCourseInfo({ ...courseInfo, category: e.target.value })
+                                setCourseInfo({ ...courseInfo, categories: e.target.value })
                             }
                         >
 

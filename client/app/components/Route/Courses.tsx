@@ -30,6 +30,7 @@ const Courses = (props: Props) => {
                                 item={item}
                                 key={index}
                             />
+                            
                     ))
                     }
                 </div>

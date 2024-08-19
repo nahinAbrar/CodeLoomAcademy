@@ -13,7 +13,7 @@ import Image from 'next/image';
 import avatar from "../../public/assets/avatar.png"
 import { useSession } from 'next-auth/react';
 import { useLogoutQuery, useSocialAuthMutation } from '@/redux/features/auth/authApi';
-import { socialAuth } from '../../../server/controllers/userController';
+import { socialAuth } from '../../../server/controllers/user.controller';
 import toast from 'react-hot-toast';
 
 type Props = {

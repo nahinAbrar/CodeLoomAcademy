@@ -8,7 +8,7 @@ import Loader from '../../Loader/Loader'
 import { format } from "timeago.js"
 import { useDeleteUserMutation, useGetAllUserQuery, useUpdateUserRoleMutation } from '@/redux/features/user/userApi'
 import { styles } from '@/app/styles/style'
-import { updateUserRole, deleteUser } from '../../../../../server/controllers/userController';
+import { updateUserRole, deleteUser } from '../../../../../server/controllers/user.controller';
 import toast from 'react-hot-toast'
 
 

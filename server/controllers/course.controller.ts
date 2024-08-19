@@ -281,7 +281,7 @@ export const addAnswer = CatchAsyncError(
       };
 
       //add this answer to our course content
-      question.questionReplies.push(newAnswer);
+      question.questionReplies?.push(newAnswer);
 
       //save
       await course?.save();

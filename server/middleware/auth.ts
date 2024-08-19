@@ -4,7 +4,7 @@ import { CatchAsyncError } from "../middleware/catchAsyncErrors";
 import ErrorHandler from "../utils/ErrorHandler";
 import jwt from "jsonwebtoken";
 import { redis } from "../utils/redis";
-import { updateAccessToken } from "../controllers/userController";
+import { updateAccessToken } from "../controllers/user.controller";
 
 // user authentication
 export const isAutheticated = CatchAsyncError(

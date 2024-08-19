@@ -1,7 +1,7 @@
 import express from "express";
 import { authorizeRoles, isAutheticated } from "../middleware/auth";
 import { createOrder, getAllOrdersAdmin } from "../controllers/order.controller";
-import { updateAccessToken } from "../controllers/userController";
+import { updateAccessToken } from "../controllers/user.controller";
 
 const orderRouter = express.Router();
 

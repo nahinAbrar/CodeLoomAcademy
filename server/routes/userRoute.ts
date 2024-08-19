@@ -1,5 +1,5 @@
 import express from 'express';
-import { registrationUser,activateUser, loginUser, logoutUser,  getUserInfo, socialAuth, updateUserInfo, updatePassword, updateProfilePicture, getAllUsersAdmin, updateUserRole, deleteUser, updateAccessToken } from '../controllers/userController';
+import { registrationUser,activateUser, loginUser, logoutUser,  getUserInfo, socialAuth, updateUserInfo, updatePassword, updateProfilePicture, getAllUsersAdmin, updateUserRole, deleteUser, updateAccessToken } from '../controllers/user.controller';
 import { authorizeRoles, isAutheticated } from '../middleware/auth';
 const userRouter = express.Router();
 
