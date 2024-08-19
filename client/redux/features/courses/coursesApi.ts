@@ -1,5 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
-import { editLayout } from '../../../../server/controllers/layout.controller';
+import { editLayout } from "../../../../server/controllers/layout.controller";
 
 export const courseApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -26,10 +26,10 @@ export const courseApi = apiSlice.injectEndpoints({
       }),
     }),
     editCourse: builder.mutation({
-      query: ({id,data}) => ({
+      query: ({ id, data }) => ({
         url: `edit-course/${id}`,
         method: "PUT",
-        body:data,
+        body: data,
         credentials: "include" as const,
       }),
     }),
@@ -47,7 +47,22 @@ export const courseApi = apiSlice.injectEndpoints({
         credentials: "include" as const,
       }),
     }),
+    getCoursesContent: builder.query({
+      query: (id) => ({
+        url: `get-course-content/${id}`,
+        method: "GET",
+        credentials: "include" as const,
+      }),
+    }),
   }),
 });
 
-export const { useCreateCourseMutation, useGetAllCoursesQuery, useDeleteCourseMutation, useEditCourseMutation, useGetUserAllCoursesQuery, useGetCoursesPreviewQuery } = courseApi;
+export const {
+  useCreateCourseMutation,
+  useGetAllCoursesQuery,
+  useDeleteCourseMutation,
+  useEditCourseMutation,
+  useGetUserAllCoursesQuery,
+  useGetCoursesPreviewQuery,
+  useGetCoursesContentQuery,
+} = courseApi;

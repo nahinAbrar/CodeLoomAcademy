@@ -9,6 +9,7 @@ import { format } from 'timeago.js'
 import CourseContentList from './CourseContentList'
 import { Elements } from '@stripe/react-stripe-js'
 import CheckoutForm from '../payment/CheckoutForm'
+import { useLoadUserQuery } from '@/redux/features/api/apiSlice'
 
 type Props = {
     data: any
@@ -17,7 +18,8 @@ type Props = {
 }
 
 const CourseDetails = ({ data, clientSecret, stripePromise }: Props) => {
-    const { user } = useSelector((state: any) => state.auth);
+    const { data:userData } = useLoadUserQuery(undefined,{})
+    const user = userData?.user
     const [open, setOpen] = useState(false)
 
     const discountPercentage = ((data?.estimatedPrice - data.price) / (data?.estimatedPrice) * 100)
@@ -195,7 +197,7 @@ const CourseDetails = ({ data, clientSecret, stripePromise }: Props) => {
                                 {isPurchased ? (
                                     <Link
                                         className={`${styles.button} !w-[180px] my-3 font-sans cursor-pointer !bg-[crimson] text-white`}
-                                        href={`course-access/${data._id}`}
+                                        href={`/course-access/${data._id}`}
                                     >
                                         Enter to Course
                                     </Link>
