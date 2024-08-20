@@ -12,8 +12,8 @@ type Props = {
     user: any
 }
 
-const CourseContent = ({ id,user }: Props) => {
-    const { data: contentData, isLoading } = useGetCoursesContentQuery(id)
+const CourseContent = ({ id, user }: Props) => {
+    const { data: contentData, isLoading, refetch } = useGetCoursesContentQuery(id, { refetchOnMountOrArgChange: true })
     const data = contentData?.content
     const [open, setOpen] = useState(false)
     const [activeVideo, setActiveVideo] = useState(0)
@@ -45,6 +45,7 @@ const CourseContent = ({ id,user }: Props) => {
                                 activeVideo={activeVideo}
                                 setActiveVideo={setActiveVideo}
                                 user={user}
+                                refetch={refetch}
                             />
                         </div>
 
