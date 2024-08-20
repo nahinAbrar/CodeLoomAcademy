@@ -49,7 +49,7 @@ const CourseContent: FC<Props> = ({
     }
 
     const newContentHandler = (item: any) => {
-        if (item.title === "" || item.description === "" || item.videoUrl === "" || item.links[0].title === "" || item.links[0].url === "") {
+        if (item.title === "" || item.description === "" || item.videoUrl === "" || item.links[0].title === "" || item.links[0].url === "" || item.videLength[0].url === "") {
             toast.error("Please Complete All the Fields First")
         } else {
             let newVideoSection = "";
@@ -65,6 +65,7 @@ const CourseContent: FC<Props> = ({
             const newContent = {
                 videoUrl: "",
                 title: "",
+                videoLength: "",
                 description: "",
                 videoSection: newVideoSection,
                 links: [
@@ -84,6 +85,7 @@ const CourseContent: FC<Props> = ({
     const addNewSection = () => {
         if (courseContentData[courseContentData.length - 1].title === "" ||
             courseContentData[courseContentData.length - 1].description === "" ||
+            courseContentData[courseContentData.length - 1].videoLength === "" ||
             courseContentData[courseContentData.length - 1].videoUrl === "" ||
             courseContentData[courseContentData.length - 1].links[0].title === "" ||
             courseContentData[courseContentData.length - 1].links[0].url === ""
@@ -94,6 +96,7 @@ const CourseContent: FC<Props> = ({
             const newContent = {
                 videoUrl: "",
                 title: "",
+                videoLength:"",
                 description: "",
                 videoSection: `Untitled Section ${activeSection}`,
                 links: [
@@ -115,6 +118,7 @@ const CourseContent: FC<Props> = ({
     const handleOptions = () => {
         if (courseContentData[courseContentData.length - 1].title === "" ||
             courseContentData[courseContentData.length - 1].description === "" ||
+            courseContentData[courseContentData.length - 1].videoLength === "" ||
             courseContentData[courseContentData.length - 1].videoUrl === "" ||
             courseContentData[courseContentData.length - 1].links[0].title === "" ||
             courseContentData[courseContentData.length - 1].links[0].url === "") {
@@ -226,7 +230,7 @@ const CourseContent: FC<Props> = ({
                                                 <label className={styles.label}>Video URL</label>
                                                 <input
                                                     type="text"
-                                                    placeholder='https://youtu.be/1aokooixKIo?si=aLS1SFOkVF8iylRz'
+                                                    placeholder='VdoCipher ID'
                                                     className={`${styles.input}`}
                                                     value={item.videoUrl}
                                                     onChange={(e) => {

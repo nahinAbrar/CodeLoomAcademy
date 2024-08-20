@@ -5,12 +5,14 @@ import { Description } from '@mui/icons-material';
 import Heading from '@/app/utils/Heading';
 import CourseContentMedia from './CourseContentMedia';
 import Header from '../Header';
+import CourseContentList from './CourseContentList';
 
 type Props = {
     id: string
+    user: any
 }
 
-const CourseContent = ({ id }: Props) => {
+const CourseContent = ({ id,user }: Props) => {
     const { data: contentData, isLoading } = useGetCoursesContentQuery(id)
     const data = contentData?.content
     const [open, setOpen] = useState(false)
@@ -42,6 +44,15 @@ const CourseContent = ({ id }: Props) => {
                                 id={id}
                                 activeVideo={activeVideo}
                                 setActiveVideo={setActiveVideo}
+                                user={user}
+                            />
+                        </div>
+
+                        <div className='hidden 800px:block 800px:col-span-3'>
+                            <CourseContentList
+                                setActiveVideo={setActiveVideo}
+                                data={data}
+                                activeVideo={activeVideo}
                             />
                         </div>
 
