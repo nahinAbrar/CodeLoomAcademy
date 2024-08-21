@@ -1,14 +1,15 @@
 import { styles } from '@/app/styles/style'
 import CoursePlayer from '@/app/utils/CoursePlayer'
-import { useAddNewAnswerMutation, useAddNewQuestionMutation, useAddReviewMutation, useAddReviewReplyAdminMutation } from '@/redux/features/courses/coursesApi'
+import { useAddNewAnswerMutation, useAddNewQuestionMutation, useAddReviewMutation, useAddReviewReplyAdminMutation, useGetCoursesContentQuery, useGetCoursesPreviewQuery } from '@/redux/features/courses/coursesApi'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { AiFillStar, AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineStar } from 'react-icons/ai'
-import { addQuestion, addAnswer } from '../../../../server/controllers/course.controller';
+import { addQuestion, addAnswer, addReview, addReplyToReview } from '../../../../server/controllers/course.controller';
 import toast from 'react-hot-toast'
 import { format } from 'timeago.js'
 import { BiMessage } from 'react-icons/bi'
 import { RiVerifiedBadgeFill } from 'react-icons/ri'
+import Ratings from '@/app/utils/Ratings'
 
 type Props = {
     data: any
@@ -28,15 +29,25 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
     const [review, setReview] = useState(" ")
     const [answer, setAnswer] = useState(" ")
     const [questionId, setQuestionId] = useState("")
+    const [isReviewReply, setIsReviewReply] = useState(false)
+    const [reviewReply, setReviewReply] = useState("")
+    const [reviewId, setReviewId] = useState("")
 
     const [addQuestion, { isSuccess: questionSuccess, error: questionError, isLoading: questionLoading }] = useAddNewQuestionMutation()
     const [addAnswer, { isSuccess: answerSuccess, error: answerError, isLoading: answerLoading }] = useAddNewAnswerMutation()
-    const [] = useAddReviewMutation()
-    const [] = useAddReviewReplyAdminMutation()
+    const [addReview, { isSuccess: reviewSuccess, error: reviewError, isLoading: reviewLoading }] = useAddReviewMutation()
+    const [addReplyToReview, { isSuccess: reviewReplySuccess, error: reviewReplyError, isLoading: reviewReplyLoading }] = useAddReviewReplyAdminMutation()
 
-    const isReviewExists = data?.reviews?.find(
+
+    const { data: course, refetch: courseRefetch } = useGetCoursesPreviewQuery(id, { refetchOnMountOrArgChange: true })
+
+    const courseData = course?.course
+
+    const isReviewExists = courseData?.reviews?.find(
         (item: any) => item.user._id === user._id
     )
+
+    console.log(reviewId)
 
     const handleQuestionSubmit = () => {
         if (question.length === 0) {
@@ -49,6 +60,24 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
 
     const handleAnswerSubmit = () => {
         addAnswer({ answer, courseId: id, contentId: data[activeVideo]._id, questionId: questionId })
+    }
+
+    const handleReviewSubmit = async () => {
+        if (review.length === 0) {
+            toast.error("Review Cannot be empty")
+        } else {
+            addReview({ review, rating, courseId: id })
+        }
+    }
+
+    const handleReviewReplySubmit = () => {
+        if (!reviewReplyLoading) {
+            if (reviewReply.length === 0) {
+                toast.error("Reply Cannot be empty")
+            } else {
+                addReplyToReview({ comment: reviewReply, courseId: id, reviewId })
+            }
+        }
     }
 
 
@@ -79,7 +108,32 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
             }
         }
 
-    }, [questionSuccess, questionError, questionLoading, answerSuccess, answerError])
+        if (reviewSuccess) {
+            toast.success("Review Added Successfully!")
+            setReview("")
+            setRating(1);
+            courseRefetch()
+        }
+        if (reviewError) {
+            if ("data" in reviewError) {
+                const erMesg = reviewError.data as any
+                toast.error(erMesg.data.message)
+            }
+        }
+
+        if (reviewReplySuccess) {
+            toast.success("Review Replied Successfully!")
+            setReviewReply("")
+            courseRefetch()
+        }
+        if (reviewReplyError) {
+            if ("data" in reviewReplyError) {
+                const erMesg = reviewReplyError.data as any
+                toast.error(erMesg.data.message)
+            }
+        }
+
+    }, [questionSuccess, questionError, questionLoading, answerSuccess, answerError, reviewSuccess, reviewError, reviewReplySuccess, reviewReplyError, reviewReplyLoading])
 
     return (
         <div className='w-[95%] 800px:w-[86%] py-4 m-auto'>
@@ -225,7 +279,7 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
                                                     <AiFillStar
                                                         key={i}
                                                         className='mr-1 cursor-pointer'
-                                                        color="rgb(246,186,0)"
+                                                        color="rgb(238,82,83)"
                                                         size={25}
                                                         onClick={() => setRating(i)}
                                                     />
@@ -233,7 +287,7 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
                                                     <AiOutlineStar
                                                         key={i}
                                                         className='mr-1 cursor-pointer'
-                                                        color="rgb(246,186,0)"
+                                                        color="rgb(238,82,83)"
                                                         size={25}
                                                         onClick={() => setRating(i)}
                                                     />
@@ -248,7 +302,7 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
                                             cols={40}
                                             rows={5}
                                             placeholder="Write Your Thoughts"
-                                            className='outline-none bg-transparent ml-3 border border-[#ffffff57] p-2 rounded w-[90%] 800px:w-full text-[18px] font-Montserrat text-black dark:text-white resize-none'
+                                            className='outline-none bg-slate-50 dark:bg-transparent ml-3 border border-slate-900 dark:border-[#ffffff57] p-2 rounded w-[90%] 800px:w-full text-[18px] font-Montserrat text-black dark:text-white resize-none'
                                         ></textarea>
                                     </div>
                                 </div>
@@ -257,16 +311,101 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
                                 {/*${isLoading && "cursor-no-drop"}*/}
                                 {/*onClick={isLoading ? null : handleReviewSubmit}*/}
                                 <div className='w-full flex justify-end'>
-                                    <div className={`${styles.button} !w-[120px] !h-[40px] text-[18px] mt-5`}
-
+                                    <div className={`${styles.button} !w-[120px] !h-[40px] text-[18px] mt-5 ${reviewLoading && "cursor-no-drop"}`}
+                                        onClick={reviewLoading ? () => { } : handleReviewSubmit}
                                     >
                                         Submit
                                     </div>
                                 </div>
                             </>
-                        )
+                        )}
+                        <br />
+                        <div className='w-full h-[1px] bg-black dark:bg-[#ffffff3b]' />
 
-                        }
+                        <div className="w-full">
+                            {(courseData?.reviews && [...courseData.reviews].reverse()).map((item: any, index: number) => (
+                                <div className='w-full my-5'>
+                                    <div className="w-full flex">
+                                        <div>
+                                            <Image
+                                                src={item.user.avatar ? item.user.avatar.url : "https://res.cloudinary.com/dvrsqx37x/image/upload/v1724142586/avatars/ocok4wwjwicc4pacsnqi.png"}
+                                                width={50}
+                                                height={50}
+                                                alt="avatar pic"
+                                                className='w-[50px] h-[50px] rounded-full'
+                                            />
+                                        </div>
+
+                                        <div className='ml-2'>
+                                            <h1 className='text-[18px]'>
+                                                {item?.user.name}
+                                            </h1>
+                                            <Ratings rating={item.rating} />
+                                            <p>{item.comment}</p>
+                                            <small className='text-black dark:text-[#ffffff83]'>
+                                                {format(item.createdAt)}
+                                            </small>
+                                        </div>
+                                    </div>
+                                    {user.role === "admin" && (
+                                        <span className={`${styles.label} !ml-20 !cursor-pointer`}
+                                            onClick={() => {
+                                                setIsReviewReply(true), setReviewId(item._id)
+                                            }
+                                            }
+                                        >
+                                            Add Reply
+                                        </span>
+                                    )
+                                        /*<BiMessage size={20} className='cursor-pointer text-black dark:text-white' />*/
+                                    }
+                                    {isReviewReply && (
+                                        <div className='w-full flex relative'>
+                                            <input
+                                                aria-label='reply Label'
+                                                placeholder='Reply...'
+                                                type="text"
+                                                value={reviewReply}
+                                                className="block 800px:ml-12 mt-2 outline-none bg-transparent border-b border-black dark:border-white p-5 w-[95%]"
+                                                onChange={(e: any) => setReviewReply(e.target.value)}
+                                            />
+                                            <button
+                                                type='submit'
+                                                className='absolute right-0 bottom-1 text-black dark:text-white font-Montserrat'
+                                                onClick={handleReviewReplySubmit}
+                                            >
+                                                Submit
+                                            </button>
+                                        </div>
+                                    )}
+
+                                    {item.commentReplies.map((item: any, index: number) => (
+                                        <div className='w-full flex 800px:ml-16 my-5 text-black dark:text-white'>
+                                            <div>
+                                                <Image
+                                                    src={item.user.avatar ? item.user.avatar.url : "https://res.cloudinary.com/dvrsqx37x/image/upload/v1724142586/avatars/ocok4wwjwicc4pacsnqi.png"}
+                                                    width={50}
+                                                    height={50}
+                                                    alt="avatar pic"
+                                                    className='w-[50px] h-[50px] rounded-full'
+                                                />
+                                            </div>
+                                            <div className='pl-2 w-[80%]'>
+                                                <div className="flex items-center gap-1">
+                                                    <h5 className='text=[20px]'>{item.user.name}</h5>
+                                                    {item.user.role === "admin" && <RiVerifiedBadgeFill className='text-[#0984e3] text-[18px]' />}
+                                                </div>
+                                                <p>{item.comment}</p>
+                                                <small className='text-slate-600 dark:text-gray-200'>
+                                                    {format(item.createdAt)} .
+                                                </small>
+                                            </div>
+                                        </div>
+
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
                     </>
                 </div>
 
