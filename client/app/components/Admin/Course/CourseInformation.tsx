@@ -67,6 +67,7 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
 
             }
             reader.readAsDataURL(file);
+            console.log(reader)
         }
     }
 

@@ -47,7 +47,7 @@ export const editCourse = CatchAsyncError(
       const courseData = (await CourseModel.findById(courseId)) as any;
 
       if (thumbnail && !thumbnail.startsWith("https")) {
-        await cloudinary.v2.uploader.destroy(thumbnail.public_id);
+        await cloudinary.v2.uploader.destroy(courseData.thumbnail.public_id);
 
         const myCloud = await cloudinary.v2.uploader.upload(thumbnail, {
           folder: "courses",
@@ -73,6 +73,8 @@ export const editCourse = CatchAsyncError(
         },
         { new: true }
       );
+
+      //await redis.set("allCourses", JSON.stringify(courseId), "EX", 604800);
 
       res.status(201).json({
         success: true,

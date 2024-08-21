@@ -108,6 +108,8 @@ const CreateCourse = (props: Props) => {
         setCourseData(data);
     }
 
+    
+
     const handleCourseCreate = async (e: any) => {
         const data = courseData;
 
