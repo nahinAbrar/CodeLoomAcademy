@@ -10,6 +10,9 @@ import { format } from 'timeago.js'
 import { BiMessage } from 'react-icons/bi'
 import { RiVerifiedBadgeFill } from 'react-icons/ri'
 import Ratings from '@/app/utils/Ratings'
+import socketIO from "socket.io-client"
+const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || ""
+const socketId = socketIO(ENDPOINT, { transports: ["websocket"] })
 
 type Props = {
     data: any
@@ -47,7 +50,7 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
         (item: any) => item.user._id === user._id
     )
 
-    console.log(reviewId)
+    
 
     const handleQuestionSubmit = () => {
         if (question.length === 0) {
@@ -88,6 +91,11 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
             toast.success("Questions Added Successfully")
             setQuestion("")
             refetch()
+            socketId.emit("notification", {
+                title: 'New Question Received',
+                message: `You have a new question in ${data[activeVideo].title}`,
+                userId: user._id,
+            })
         }
         if (questionError) {
             if ("data" in questionError) {
@@ -100,6 +108,13 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
             toast.success("Successfully Replied!")
             setAnswer("")
             refetch()
+            if (user.role !== "admin") {
+                socketId.emit("notification", {
+                    title: 'New Reply Received',
+                    message: `You have a new reply in question ${data[activeVideo].title}`,
+                    userId: user._id,
+                })
+            }
         }
         if (answerError) {
             if ("data" in answerError) {
@@ -113,6 +128,11 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
             setReview("")
             setRating(1);
             courseRefetch()
+            socketId.emit("notification", {
+                title: 'New Review Received',
+                message: `You have a new review in ${data[activeVideo].title}`,
+                userId: user._id,
+            })
         }
         if (reviewError) {
             if ("data" in reviewError) {

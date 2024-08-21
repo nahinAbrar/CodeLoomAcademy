@@ -2,7 +2,7 @@ require("dotenv").config();
 import { NextFunction, Request, Response } from "express";
 import userModel from "../models/userModel";
 import { IOrder } from "../models/orderModel";
-import CourseModel from "../models/course.model";
+import CourseModel, { ICourse } from "../models/course.model";
 import NotificationModel from "../models/notificationModel";
 import ErrorHandler from "../utils/ErrorHandler";
 import { CatchAsyncError } from "../middleware/catchAsyncErrors";
@@ -42,7 +42,7 @@ export const createOrder = CatchAsyncError(
         return next(new ErrorHandler("Course ALready bought!", 400));
       }
 
-      const course = await CourseModel.findById(courseId);
+      const course:any = await CourseModel.findById(courseId);
 
       if (!course) {
         return next(new ErrorHandler("Course Not Found", 400));
@@ -92,7 +92,7 @@ export const createOrder = CatchAsyncError(
 
       user?.courses.push(course?._id);
 
-      await redis.set(req.user?.id, JSON.stringify(user));
+      await redis.set(req.user?._id, JSON.stringify(user));
 
       await user?.save();
 
@@ -102,8 +102,8 @@ export const createOrder = CatchAsyncError(
         message: `You Have a new order from ${course?.name}`,
       });
 
-      // need fix
-      course.purchased ? (course.purchased += 1) : course.purchased;
+      // maybe fixed
+      course.purchased += 1
 
       console.log(course.purchased?.toString(), 500);
       await course.save();

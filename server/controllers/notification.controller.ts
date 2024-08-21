@@ -8,7 +8,7 @@ import cron from "node-cron";
 export const getNotifications = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const notifications = await NotificationModel.find().select({
+      const notifications = await NotificationModel.find().sort({
         createdAt: -1,
       });
 
