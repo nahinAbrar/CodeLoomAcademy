@@ -497,6 +497,7 @@ const CommentItem = ({ data, item, answer, setAnswer, handleAnswerSubmit, setQue
                     </span>
 
                 </div>
+                {/**questionID === item._id*/}
                 {replyActive && (
                     <>
                         {item.questionReplies.map((item: any) => (

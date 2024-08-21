@@ -77,90 +77,10 @@ const AllInvoices = ({ isDashBoard }: Props) => {
             ]
     ]
 
-    
+
     const rows: any = [
-        {
-            id: "122132",
-            userName: "Nahin",
-            userEmail: "asmnahin21@gmail.com",
-            title: "Next JS Course",
-            price: "6500",
-            created_at: "3 days ago",
-        },
-        {
-            id: "122133",
-            userName: "Amina",
-            userEmail: "amina.khan@example.com",
-            title: "React JS Course",
-            price: "7500",
-            created_at: "1 week ago",
-        },
-        {
-            id: "122134",
-            userName: "Siddharth",
-            userEmail: "sid.mehta@example.com",
-            title: "Angular Course",
-            price: "6000",
-            created_at: "5 days ago",
-        },
-        {
-            id: "122135",
-            userName: "Priya",
-            userEmail: "priya.verma@example.com",
-            title: "Vue JS Course",
-            price: "5500",
-            created_at: "2 days ago",
-        },
-        {
-            id: "122136",
-            userName: "Rahul",
-            userEmail: "rahul.singh@example.com",
-            title: "Node JS Course",
-            price: "8000",
-            created_at: "3 weeks ago",
-        },
-        {
-            id: "122137",
-            userName: "Meera",
-            userEmail: "meera.shah@example.com",
-            title: "Express JS Course",
-            price: "7000",
-            created_at: "4 days ago",
-        },
-        {
-            id: "122138",
-            userName: "Ali",
-            userEmail: "ali.ahmed@example.com",
-            title: "JavaScript Basics",
-            price: "4500",
-            created_at: "6 days ago",
-        },
-        {
-            id: "122139",
-            userName: "Nina",
-            userEmail: "nina.patel@example.com",
-            title: "TypeScript Essentials",
-            price: "5000",
-            created_at: "1 day ago",
-        },
-        {
-            id: "122140",
-            userName: "Rohan",
-            userEmail: "rohan.kumar@example.com",
-            title: "React Native Course",
-            price: "7200",
-            created_at: "2 weeks ago",
-        },
-        {
-            id: "122141",
-            userName: "Fatima",
-            userEmail: "fatima.begum@example.com",
-            title: "Redux Advanced",
-            price: "6700",
-            created_at: "10 days ago",
-        }
     ];
-    
+
     orderData &&
         orderData.forEach((item: any) => {
             rows.push({
@@ -233,11 +153,11 @@ const AllInvoices = ({ isDashBoard }: Props) => {
                             }}
                         >
 
-                            <DataGrid 
-                            checkboxSelection={isDashBoard? false:true}
-                            rows={rows}
-                            columns={columns}
-                            components={isDashBoard?{}:{Toolbar:GridToolbar}}
+                            <DataGrid
+                                checkboxSelection={isDashBoard ? false : true}
+                                rows={rows}
+                                columns={columns}
+                                components={isDashBoard ? {} : { Toolbar: GridToolbar }}
                             />
 
                         </Box>

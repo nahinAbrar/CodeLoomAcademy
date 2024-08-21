@@ -30,13 +30,13 @@ const Hero: FC<Props> = (props) => {
                     <div className='absolute top-[100px] 1000px:top-[unset] 1500px:h-[700px] 1500px:w-[700px] 1100px:h-[600px] 1100px:w-[600px] h-[40vh] left-5 w-[40vh] hero_animation rounded-[20%] 1100px:left-8 1500px:left-14' />
 
                     {/*LEFT*/}
-                    <div className='1000px:w-[40%] flex 1000px:min-h-screen items-center justify-end pt-[70px] 1000px:pt-[0] z-10'>
+                    <div className='1000px:w-[40%] flex 1000px:min-h-screen items-center justify-center pt-[70px] 1000px:pt-[0] z-10'>
                         <Image
                             /*src={require("../../../public/assets/three.jpg")}*/
                             src={data?.layout?.banner?.image?.url}
                             /*src={"https://lottie.host/embed/c86beef6-2b01-4600-b18b-9b3e657920a2/aJJ3FXJPOI.json"}*/
                             width={400}
-                            height={500}
+                            height={400}
                             alt="hero image"
                             className='rounded-xl'
                         />
