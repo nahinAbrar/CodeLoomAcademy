@@ -41,9 +41,10 @@ const ChangePassword: FC<Props> = (props) => {
                 Change Password
             </h1>
 
+            {/**aria-required */}
             <div className='w-full'>
                 <form
-                    aria-required
+                    
                     onSubmit={passwordChangeHandler}
                     className='flex flex-col items-center'
                 >
