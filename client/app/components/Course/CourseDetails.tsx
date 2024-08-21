@@ -10,6 +10,8 @@ import CourseContentList from './CourseContentList'
 import { Elements } from '@stripe/react-stripe-js'
 import CheckoutForm from '../payment/CheckoutForm'
 import { useLoadUserQuery } from '@/redux/features/api/apiSlice'
+import Image from 'next/image'
+import { RiVerifiedBadgeFill } from 'react-icons/ri'
 
 type Props = {
     data: any
@@ -18,7 +20,7 @@ type Props = {
 }
 
 const CourseDetails = ({ data, clientSecret, stripePromise }: Props) => {
-    const { data:userData } = useLoadUserQuery(undefined,{})
+    const { data: userData } = useLoadUserQuery(undefined, {})
     const user = userData?.user
     const [open, setOpen] = useState(false)
 
@@ -137,15 +139,13 @@ const CourseDetails = ({ data, clientSecret, stripePromise }: Props) => {
                             {(data?.reviews && [...data.reviews].reverse()).map((item: any, index: number) => (
                                 <div className='w-full pb-4' key={index}>
                                     <div className='flex'>
-                                        <div className='w-[50px] h-[50px]'>
-                                            <div className='w-[50px] h-[50px] bg-slate-600 rounded-[50px] flex items-center justify-center cursor-pointer'>
-
-                                                <h1 className='uppercase text-[18px] text-black dark:text-white'>
-                                                    {item.user.name.slice(0, 2)}
-                                                </h1>
-
-                                            </div>
-                                        </div>
+                                        <Image
+                                            src={item.user.avatar ? item.user.avatar.url : "https://res.cloudinary.com/dvrsqx37x/image/upload/v1724142586/avatars/ocok4wwjwicc4pacsnqi.png"}
+                                            width={50}
+                                            height={50}
+                                            alt="avatar pic"
+                                            className='w-[50px] h-[50px] rounded-full'
+                                        />
                                         <div className='hidden 800px:block pl-2'>
                                             <div className='flex items-center'>
 
@@ -166,6 +166,30 @@ const CourseDetails = ({ data, clientSecret, stripePromise }: Props) => {
                                             <Ratings rating={item.rating} />
                                         </div>
                                     </div>
+                                    {item.commentReplies.map((item: any, index: number) => (
+                                        <div className='w-full flex 800px:ml-16 my-5 text-black dark:text-white'>
+                                            <div>
+                                                <Image
+                                                    src={item.user.avatar ? item.user.avatar.url : "https://res.cloudinary.com/dvrsqx37x/image/upload/v1724142586/avatars/ocok4wwjwicc4pacsnqi.png"}
+                                                    width={50}
+                                                    height={50}
+                                                    alt="avatar pic"
+                                                    className='w-[50px] h-[50px] rounded-full'
+                                                />
+                                            </div>
+                                            <div className='pl-2 w-[80%]'>
+                                                <div className="flex items-center gap-1">
+                                                    <h5 className='text=[20px]'>{item.user.name}</h5>
+                                                    {item.user.role === "admin" && <RiVerifiedBadgeFill className='text-[#0984e3] text-[18px]' />}
+                                                </div>
+                                                <p>{item.comment}</p>
+                                                <small className='text-slate-600 dark:text-gray-200'>
+                                                    {format(item.createdAt)} .
+                                                </small>
+                                            </div>
+                                        </div>
+
+                                    ))}
                                 </div>
                             ))}
                         </div>
