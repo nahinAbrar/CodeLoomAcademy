@@ -354,7 +354,7 @@ const CommentItem = ({ data, item, answer, setAnswer, handleAnswerSubmit, setQue
                                 <div className='pl-2 w-[80%]'>
                                     <div className="flex items-center gap-1">
                                         <h5 className='text=[20px]'>{item.user.name}</h5>
-                                        <RiVerifiedBadgeFill className='text-[#0984e3] text-[18px]' />
+                                        {item.user.role === "admin" && <RiVerifiedBadgeFill className='text-[#0984e3] text-[18px]' />}
                                     </div>
                                     <p>{item.answer}</p>
                                     <small className='text-slate-600 dark:text-gray-200'>
