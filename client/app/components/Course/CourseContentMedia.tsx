@@ -8,6 +8,7 @@ import { addQuestion, addAnswer } from '../../../../server/controllers/course.co
 import toast from 'react-hot-toast'
 import { format } from 'timeago.js'
 import { BiMessage } from 'react-icons/bi'
+import { RiVerifiedBadgeFill } from 'react-icons/ri'
 
 type Props = {
     data: any
@@ -26,7 +27,7 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
     const [rating, setRating] = useState(0)
     const [review, setReview] = useState(" ")
     const [answer, setAnswer] = useState(" ")
-    const [answerId, setAnswerId] = useState("")
+    const [questionId, setQuestionId] = useState("")
 
     const [addQuestion, { isSuccess: questionSuccess, error: questionError, isLoading: questionLoading }] = useAddNewQuestionMutation()
     const [addAnswer, { isSuccess: answerSuccess, error: answerError, isLoading: answerLoading }] = useAddNewAnswerMutation()
@@ -47,8 +48,10 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
     }
 
     const handleAnswerSubmit = () => {
-        console.log("answer")
+        addAnswer({ answer, courseId: id, contentId: data[activeVideo]._id, questionId: questionId })
     }
+
+
 
     useEffect(() => {
 
@@ -64,7 +67,19 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
             }
         }
 
-    }, [questionSuccess, questionError, questionLoading])
+        if (answerSuccess) {
+            toast.success("Successfully Replied!")
+            setAnswer("")
+            refetch()
+        }
+        if (answerError) {
+            if ("data" in answerError) {
+                const erMesg = answerError.data as any
+                toast.error(erMesg.data.message)
+            }
+        }
+
+    }, [questionSuccess, questionError, questionLoading, answerSuccess, answerError])
 
     return (
         <div className='w-[95%] 800px:w-[86%] py-4 m-auto'>
@@ -180,7 +195,7 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
                             setAnswer={setAnswer}
                             handleAnswerSubmit={handleAnswerSubmit}
                             user={user}
-                            setAnswerId={setAnswerId}
+                            setQuestionId={setQuestionId}
 
                         />
                     </div>
@@ -260,7 +275,7 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
     )
 }
 
-const CommentReply = ({ data, activeVideo, answer, setAnswer, handleAnswerSubmit, user, setAnswerId }: any) => {
+const CommentReply = ({ data, activeVideo, answer, setAnswer, handleAnswerSubmit, user, setQuestionId, answerLoading }: any) => {
     return (
         <>
             <div className='w-full my-3'>
@@ -272,7 +287,9 @@ const CommentReply = ({ data, activeVideo, answer, setAnswer, handleAnswerSubmit
                         item={item}
                         answer={answer}
                         setAnswer={setAnswer}
+                        setQuestionId={setQuestionId}
                         handleAnswerSubmit={handleAnswerSubmit}
+                        answerLoading={answerLoading}
                     />
                 ))
 
@@ -282,7 +299,7 @@ const CommentReply = ({ data, activeVideo, answer, setAnswer, handleAnswerSubmit
     )
 }
 
-const CommentItem = ({ data, activeVideo, item, answer, setAnswer, handleAnswerSubmit }: any) => {
+const CommentItem = ({ data, item, answer, setAnswer, handleAnswerSubmit, setQuestionId, answerLoading }: any) => {
     const [replyActive, setReplyActive] = useState(false)
     return (
         <>
@@ -308,7 +325,10 @@ const CommentItem = ({ data, activeVideo, item, answer, setAnswer, handleAnswerS
                 <div className='w-full flex'>
                     <span
                         className='800px:pl-16 text-slate-800 dark:text-[#ffffff83] cursor-pointer mr-2'
-                        onClick={() => setReplyActive(!replyActive)}
+                        onClick={() => {
+                            setReplyActive(!replyActive),
+                                setQuestionId(item._id)
+                        }}
                     >
                         {!replyActive ? item.questionReplies.length !== 0 ? "All Replies" : "Add Reply" : "Hide Replies"}
                     </span>
@@ -331,10 +351,13 @@ const CommentItem = ({ data, activeVideo, item, answer, setAnswer, handleAnswerS
                                         className='w-[50px] h-[50px] rounded-full'
                                     />
                                 </div>
-                                <div className='pl-2'>
-                                    <h5 className='text=[20px]'>{item.user.name}</h5>
-                                    <p>{item.comment}</p>
-                                    <small className='text-[#ffffff83] dark:text-gray-200'>
+                                <div className='pl-2 w-[80%]'>
+                                    <div className="flex items-center gap-1">
+                                        <h5 className='text=[20px]'>{item.user.name}</h5>
+                                        <RiVerifiedBadgeFill className='text-[#0984e3] text-[18px]' />
+                                    </div>
+                                    <p>{item.answer}</p>
+                                    <small className='text-slate-600 dark:text-gray-200'>
                                         {format(item.createdAt)} .
                                     </small>
                                 </div>
@@ -347,14 +370,15 @@ const CommentItem = ({ data, activeVideo, item, answer, setAnswer, handleAnswerS
                                     type='text'
                                     placeholder='Enter your reply...'
                                     value={answer}
-                                    onChange={(e:any) => setAnswer(e.target.value)}
-                                    className='block 800px:ml-12 mt-2 outline-none bg-transparent text-black dark:text-white border-b border-black dark:border-white p-5 w-[95%]'
+                                    onChange={(e: any) => setAnswer(e.target.value)}
+                                    className={`block 800px:ml-12 mt-2 outline-none bg-transparent text-black dark:text-white border-b border-black dark:border-white p-5 w-[95%] ${answer === "" || answerLoading && 'cursor-not-allowed'}`}
                                 />
 
                                 <button
                                     type='submit'
                                     className='absolute right-0 bottom-1'
                                     onClick={handleAnswerSubmit}
+                                    disabled={answer === "" || answerLoading}
                                 >
                                     Reply
                                 </button>
