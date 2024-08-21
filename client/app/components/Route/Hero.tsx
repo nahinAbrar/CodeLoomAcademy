@@ -17,9 +17,10 @@ const Hero: FC<Props> = (props) => {
                 <Image
                     /*src={require("../../../public/assets/three.jpg")}*/
                     src={data?.layout?.banner?.image?.url}
-                    alt='hero-1'
+                    /*src={"https://lottie.host/embed/c86beef6-2b01-4600-b18b-9b3e657920a2/aJJ3FXJPOI.json"}*/
                     width={400}
-                    height={400}
+                    height={500}
+                    alt="hero image"
                     className='rounded-xl'
                 />
             </div>

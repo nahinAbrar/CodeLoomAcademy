@@ -116,6 +116,7 @@ const courseSchema = new Schema<ICourse>(
     // required true in front end time
     thumbnail: {
       public_id: {
+        required: true,
         type: String,
       },
       url: {

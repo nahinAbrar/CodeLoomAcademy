@@ -15,15 +15,15 @@ type Props = {
     id: string
 }
 
-const EditCourse: FC<Props> = ({id}) => {
+const EditCourse: FC<Props> = ({ id }) => {
 
-    
+
     const [editCourse, { isSuccess: editSuccess, error: editError }] = useEditCourseMutation();
     const [active, setActive] = useState(0);
     const { data, refetch } = useGetAllCoursesQuery({}, { refetchOnMountOrArgChange: true });
     const editData = data && data.courses.find((i: any) => i._id === id);
 
-    
+
 
     useEffect(() => {
         if (editSuccess) {
@@ -43,7 +43,7 @@ const EditCourse: FC<Props> = ({id}) => {
                 description: editData.description,
                 price: editData.price,
                 estimatedPrice: editData?.estimatedPrice,
-                categories:editData.categories,
+                categories: editData.categories,
                 tags: editData.tags,
                 level: editData.level,
                 demoUrl: editData.demoUrl,
@@ -64,10 +64,15 @@ const EditCourse: FC<Props> = ({id}) => {
         price: "",
         estimatedPrice: "",
         tags: "",
-        categories:"",
+        categories: "",
         level: "",
         demoUrl: "",
-        thumbnail: "",
+        thumbnail: [
+            {
+                public_id: "",
+                url: "",
+            }
+        ],
     })
 
     const [benefits, setBenefits] = useState([{ title: "" }]);
@@ -128,6 +133,8 @@ const EditCourse: FC<Props> = ({id}) => {
 
         setCourseData(data);
     }
+
+    console.log("here", data)
 
     const handleCourseCreate = async (e: any) => {
         const data = courseData;
