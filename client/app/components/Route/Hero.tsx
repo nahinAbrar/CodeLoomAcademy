@@ -1,7 +1,6 @@
 import React, { FC, useState } from 'react'
 import Link from "next/link"
 import Image from "next/image"
-import { BiSearch } from 'react-icons/bi'
 import { useGetHeroDataQuery } from '@/redux/features/layout/layoutApi'
 import Loader from '../Loader/Loader'
 import { useRouter } from 'next/navigation'

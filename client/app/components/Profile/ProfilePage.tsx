@@ -3,7 +3,6 @@ import React, { FC, useEffect, useState } from 'react'
 import SidebarProfile from './SidebarProfile';
 import { useLogoutQuery } from '@/redux/features/auth/authApi';
 import { signOut } from 'next-auth/react';
-import { redirect } from 'next/navigation';
 import toast from 'react-hot-toast';
 import ProfileInfo from './ProfileInfo';
 import ChangePassword from './ChangePassword';
