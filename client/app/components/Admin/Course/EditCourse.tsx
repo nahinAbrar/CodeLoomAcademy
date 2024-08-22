@@ -24,7 +24,6 @@ const EditCourse: FC<Props> = ({ id }) => {
     const editData = data && data.courses.find((i: any) => i._id === id);
 
 
-    console.log(editData)
     useEffect(() => {
         if (editSuccess) {
             toast.success("Couse Updated Successfullly!");
