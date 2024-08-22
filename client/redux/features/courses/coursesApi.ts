@@ -1,5 +1,4 @@
 import { apiSlice } from "../api/apiSlice";
-import { editLayout } from "../../../../server/controllers/layout.controller";
 
 export const courseApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
