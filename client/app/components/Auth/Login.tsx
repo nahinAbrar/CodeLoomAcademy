@@ -52,7 +52,7 @@ const Login: FC<Props> = ({ setRoute, setOpen, refetch }) => {
     return (
         <div className='w-full'>
             <h1 className={`${styles.title}`}>
-                Login to Educatum
+                Login to CodeLoom
             </h1>
 
             <form
@@ -150,7 +150,7 @@ const Login: FC<Props> = ({ setRoute, setOpen, refetch }) => {
                 </div>
 
                 <h5 className='text-center pt-4 font-Montserrat text-[14px] dark:text-white'>
-                    New to Educatum?{" "}
+                    New to CodeLoom?{" "}
                     <span className='text-blue-500 dark:text-blue-300 pl-1 cursor-pointer'
                         onClick={() => setRoute("Sign-Up")}>
                         Sign Up

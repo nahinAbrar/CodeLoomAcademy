@@ -124,7 +124,7 @@ const Sidebar = () => {
                             >
                                 <Link href={"/admin"} className="block">
                                     <h3 className="text-[25px] font-Montserrat uppercase dark:text-white text-black">
-                                        Educatum
+                                        CodeLoom
                                     </h3>
                                 </Link>
                                 <IconButton

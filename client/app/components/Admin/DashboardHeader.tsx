@@ -10,16 +10,15 @@ const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || ""
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] })
 
 type Props = {
-    open: boolean;
-    setOpen?: any;
 }
 
-const DashboardHeader: FC<Props> = ({ open, setOpen }) => {
+const DashboardHeader: FC<Props> = () => {
 
     const { data, refetch } = useGetAllNotificationsQuery({ refetchOnMountOrArgChange: true })
     const [updateNotificationStatus, { isSuccess, error }] = useUpdateNotificationStatusMutation()
 
     const [notifications, setNotifications] = useState<any>([])
+    const [open, setOpen] = useState(false)
 
     const [audio] = useState(new Audio("https://res.cloudinary.com/dvrsqx37x/video/upload/v1724239522/notificationAudio/ebjit98mdjypuzytfpx8.wav"))
 
@@ -95,14 +94,8 @@ const DashboardHeader: FC<Props> = ({ open, setOpen }) => {
                     ))
 
                     }
-
-
-
-
                 </div>
-            )
-
-            }
+            )}
 
         </div>
     )

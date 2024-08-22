@@ -65,7 +65,9 @@ const AllInvoices = ({ isDashBoard }: Props) => {
                     flex: 0.2,
                     renderCell: (params: any) => {
                         return (
-                            <a href={`mailto:${params.row.userEmail}`}>
+                            <a 
+                            title='mail link'
+                            href={`mailto:${params.row.userEmail}`}>
                                 <AiOutlineMail
                                     className='dark:text-white text-black'
                                     size={20}

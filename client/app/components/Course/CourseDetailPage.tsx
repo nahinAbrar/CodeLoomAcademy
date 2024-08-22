@@ -53,7 +53,7 @@ const CourseDetailPage = ({ id }: Props) => {
                 (
                     <div>
                         <Heading
-                            title={data.course.name + " --Educatum"}
+                            title={data.course.name + " --CodeLoom"}
                             description={"Course Description"}
                             keywords={data?.course?.tags}
                         />

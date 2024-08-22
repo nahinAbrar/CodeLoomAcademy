@@ -88,7 +88,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                                 href={"/"}
                                 className={`text-[25px] font-Montserrat font-500 text-black dark:text-white`}
                             >
-                                Educatum
+                                CodeLoom
                             </Link>
                         </div>
                         <div className='flex items-center'>
@@ -177,7 +177,7 @@ const Header: FC<Props> = ({ activeItem, setOpen, route, open, setRoute }) => {
                                 <br />
                                 <br />
                                 <p className='text-[16px] px-2 pl-5 text-black dark:text-white font-Montserrat'>
-                                    Copyright © 2024 Educatum Academy
+                                    Copyright © 2024 CodeLoom Academy
                                 </p>
 
                             </div>

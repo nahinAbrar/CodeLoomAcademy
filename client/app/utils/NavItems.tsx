@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
 
@@ -61,8 +62,16 @@ const NavItems: React.FC<Props> = ({ activeItem, isMobile }) => {
                                 href="/"
                                 passHref
                             >
-                                <span className={`text-[25px] font-Montserrat font-[500] text-black dark:text-white`}>
-                                    Educatum
+                                <span className={`text-black dark:text-white`}>
+                                    <a
+                                        title='font'
+                                        href="https://www.fontspace.com/category/cursive">
+                                        <Image src="https://see.fontimg.com/api/rf5/PKY87/MmRmZGRhNTQ4YjFmNDk5MTliMjk2NWNiMjYwYTFlOGYudHRm/Q29kZUxvb20gQWNhZGVteQ/emotional-rescue-personal-use-regular.png?r=fs&h=28&w=1000&fg=000000&bg=FFFFFF&tb=1&s=28"
+                                            alt="Cursive fonts"
+                                            width={100}
+                                            height={80}
+                                        />
+                                    </a>
                                 </span>
 
                             </Link>

@@ -13,7 +13,7 @@ const page = (props: Props) => {
     return (
         <div>
             <Heading
-                title="Educatum-ADMIN"
+                title="CodeLoom-ADMIN"
                 description="Admin Panel"
                 keywords="Educatum"
             />

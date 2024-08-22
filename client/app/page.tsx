@@ -19,9 +19,9 @@ const Page: FC<Props> = (props) => {
   return (
     <div>
       <Heading 
-      title="Educatum Academy"
-      description="Bla Bla"
-      keywords="VARSITY,"
+      title="CodeLoom Academy"
+      description="At CodeLoom Academy, we empower aspiring coders to master programming skills through expert-led courses, hands-on learning, and a supportive community. Start your journey with us and weave your future in tech."
+      keywords="CodeLoom Academy, programming courses, coding education, learn to code, tech skills, software development, coding bootcamp"
       />
 
       <Header

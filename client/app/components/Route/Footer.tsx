@@ -7,7 +7,7 @@ const Footer = (props: Props) => {
     return (
 
         <footer>
-            <div className='border border-[#0000000e] dark:border-[#ffffff1e]'>
+            <div className='border border-[#0000000e] dark:border-[#ffffff1e] font-Montserrat'>
                 <br />
                 <div className='w-[95%] 800px:w-full 800px:max-w-[85%] mx-auto px-2 sm:px-6 lg:px-8'>
                     <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4'>
@@ -27,7 +27,7 @@ const Footer = (props: Props) => {
 
                                 <li>
                                     <Link
-                                        href="/privacy-policy"
+                                        href="/policy"
                                         className='text-base text-black dark:text-gray-300 dark:hover:text-white'
                                     >
                                         Privacy Policy
@@ -69,7 +69,7 @@ const Footer = (props: Props) => {
 
                                 <li>
                                     <Link
-                                        href="/course-dashboard"
+                                        href="/courses"
                                         className='text-base text-black dark:text-gray-300 dark:hover:text-white'
                                     >
                                         Course Dashboard
@@ -116,7 +116,7 @@ const Footer = (props: Props) => {
                                 Contact Info
                             </h3>
                             <p className='text-base text-black dark:text-gray-300 dark:hover:text-white pb-2'>
-                                Call Us: 1-885-665-2022
+                                Call Us: +880 13090 40483
                             </p>
 
                             <p className='text-base text-black dark:text-gray-300 dark:hover:text-white pb-2'>
@@ -124,12 +124,12 @@ const Footer = (props: Props) => {
                             </p>
 
                             <p className='text-base text-black dark:text-gray-300 dark:hover:text-white pb-2'>
-                                Mail Us : hello@example.com
+                                Mail Us : thepersian03@gmail.com
                             </p>
                         </div>
                     </div>
-                    <p className='text-center text-black dark:text-gray-300 dark:hover:text-white pb-2'>
-                        Copyright © 2024 Educatum Academy | All Rights Reserved
+                    <p className='font-serif font-bold text-center text-black dark:text-gray-300 dark:hover:text-white pb-2'>
+                        Copyright © 2024 CodeLoom Academy || All Rights Reserved
                     </p>
                 </div>
 

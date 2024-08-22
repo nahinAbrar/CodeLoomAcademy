@@ -58,7 +58,7 @@ const page = (props: Props) => {
 
                     <div className='w-[95%] 800px:w-[85%] m-auto min-h-[70vh]'>
                         <Heading
-                            title={"All Courses - Educatum"}
+                            title={"All Courses - CodeLoom"}
                             description={"Bla Bla"}
                             keywords={"Programming"}
                         />

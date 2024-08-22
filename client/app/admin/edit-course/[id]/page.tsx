@@ -16,9 +16,9 @@ const page = ({ params }: any) => {
   return (
     <div>
       <Heading
-        title="Educatum-ADMIN"
+        title="CodeLoom-ADMIN"
         description="Admin Panel"
-        keywords="Educatum"
+        keywords="CodeLoom"
       />
 
       <div className='flex'>
