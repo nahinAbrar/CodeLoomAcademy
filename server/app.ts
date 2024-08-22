@@ -9,7 +9,7 @@ import orderRouter from "./routes/order.route";
 import notificationRouter from "./routes/notification.route";
 import analyticsRouter from "./routes/analytics.route";
 import layoutRouter from "./routes/layout.route";
-import {rateLimit} from 'express-rate-limit'
+import { rateLimit } from "express-rate-limit";
 
 export const app = express();
 
@@ -20,24 +20,43 @@ app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());
 
 // cors => cross origin resource sharing
+
 app.use(
   cors({
-    origin: ['http://localhost:3000'],
+    origin: [
+      "https://code-loom-academy-backend-bwo9j26vf-asm-nahins-projects.vercel.app/",
+    ],
+    methods: ["POST", "GET", "PUT"],
+    credentials: true,
+  })
+);
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
     credentials: true,
   })
 );
 
 // api request limit
 const limiter = rateLimit({
-	windowMs: 15 * 60 * 1000, // 15 minutes
-	limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
-	standardHeaders: 'draft-7', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
-	// store: ... , // Redis, Memcached, etc. See below.
-})
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+  standardHeaders: "draft-7", // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+  // store: ... , // Redis, Memcached, etc. See below.
+});
 
 // routes
-app.use("/api/v1", userRouter, courseRouter, orderRouter, notificationRouter, analyticsRouter, layoutRouter);
+app.use(
+  "/api/v1",
+  userRouter,
+  courseRouter,
+  orderRouter,
+  notificationRouter,
+  analyticsRouter,
+  layoutRouter
+);
 
 // testing api
 app.get("/test", (req: Request, res: Response, next: NextFunction) => {
@@ -54,8 +73,7 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
   next(err);
 });
 
-
 // middleware calls
-app.use(limiter)
+app.use(limiter);
 
 app.use(ErrorMiddleWare);
