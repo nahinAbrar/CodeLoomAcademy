@@ -145,7 +145,7 @@ export const newPayment = CatchAsyncError(
         amount: req.body.amount,
         currency: "USD",
         metadata: {
-          company: "Educatum",
+          company: "CodeLoom",
         },
         automatic_payment_methods: {
           enabled: true,
