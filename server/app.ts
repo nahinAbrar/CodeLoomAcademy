@@ -21,15 +21,6 @@ app.use(cookieParser());
 
 // cors => cross origin resource sharing
 
-app.use(
-  cors({
-    origin: [
-      "https://code-loom-academy-backend-bwo9j26vf-asm-nahins-projects.vercel.app/",
-    ],
-    methods: ["POST", "GET", "PUT"],
-    credentials: true,
-  })
-);
 
 app.use(
   cors({
