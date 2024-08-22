@@ -26,25 +26,27 @@ const Hero: FC<Props> = (props) => {
             {isLoading ? (
                 <Loader />
             ) : (
-                <div className='w-full 1000px:flex items-center ml-5'>
+                <div className='w-full 1000px:flex items-center'>
                     {/*<div className='hero_animation absolute top-[100px] left-5 h-[25vh] w-[40vh] rounded-[20%] 1000px:top-[unset] 1100px:w-[600px] 1100px:h-[600px] 1100px:left-8  1500px:left-14 1500px:h-[700px] 1500px:w-[700px]' />*/}
 
                     {/*LEFT*/}
                     <div className='1000px:w-[40%] flex 1000px:flex 1000px:justify-end 1000px:min-h-screen items-center justify-center pt-[70px] 1000px:pt-[0] z-10'>
-                        <Image
-                            /*src={require("../../../public/assets/three.jpg")}*/
-                            src={data?.layout?.banner?.image?.url}
-                            /*src={"https://lottie.host/embed/c86beef6-2b01-4600-b18b-9b3e657920a2/aJJ3FXJPOI.json"}*/
-                            width={500}
-                            height={500}
-                            alt="hero image"
-                            className='rounded-xl '
-                        />
+                        <div className='w-[380px] h-[380px] flex items-center justify-center 1000px:w-[500px] 1000px:h-[500px]'>
+                            <Image
+                                /*src={require("../../../public/assets/three.jpg")}*/
+                                src={data?.layout?.banner?.image?.url}
+                                /*src={"https://lottie.host/embed/c86beef6-2b01-4600-b18b-9b3e657920a2/aJJ3FXJPOI.json"}*/
+                                width={500}
+                                height={500}
+                                alt="hero image"
+                                className='rounded-xl'
+                            />
+                        </div>
                     </div>
 
 
                     {/*RIGHT*/}
-                    <div className='1000px:w-[60%] 1000px:flex flex flex-col items-center 1000px:mt-[0px] text-center 1000px:text-left mt-[150px] p-0 m-0'>
+                    <div className='1000px:w-[60%] 1000px:flex flex flex-col items-center 1000px:mt-[0px] text-center 1000px:text-left mt-[150px]'>
 
                         <h2 className='dark:text-white text-[#000000c7] text-[30px] px-3 w-full 1000px:text-[70px] font-[600] font-Josefin py-2 1000px:leading-[75px] 1500px:w-[60%] 1100px:w-[78%]'>
                             {/*Learn In The Smartest Way*/}
