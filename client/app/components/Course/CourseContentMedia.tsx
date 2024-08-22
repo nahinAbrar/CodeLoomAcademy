@@ -4,7 +4,6 @@ import { useAddNewAnswerMutation, useAddNewQuestionMutation, useAddReviewMutatio
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { AiFillStar, AiOutlineArrowLeft, AiOutlineArrowRight, AiOutlineStar } from 'react-icons/ai'
-import { addQuestion, addAnswer, addReview, addReplyToReview } from '../../../../server/controllers/course.controller';
 import toast from 'react-hot-toast'
 import { format } from 'timeago.js'
 import { BiMessage } from 'react-icons/bi'
