@@ -33,8 +33,8 @@ const DashboardHeader: FC<Props> = () => {
         if (isSuccess) {
             refetch()
         }
-        if(error){
-            if("data" in error){
+        if (error) {
+            if ("data" in error) {
                 const erMesg = error.data as any
                 toast.error(erMesg.data.message)
             }
@@ -73,7 +73,8 @@ const DashboardHeader: FC<Props> = () => {
                         Notifications
                     </h5>
                     {notifications && notifications.map((item: any, index: number) => (
-                        <div className='dark:bg-[#2d3a4ea1] bg-[#00000013] font-Montserrat border-b dark:border-b-[#ffffff47] border-b-[#0000000f]'>
+                        <div className='dark:bg-[#2d3a4ea1] bg-[#00000013] font-Montserrat border-b dark:border-b-[#ffffff47] border-b-[#0000000f]'
+                            key={index}>
                             <div className='w-full flex items-center justify-between p-2'>
                                 <p className='text-black dark:text-white'>
                                     {item.title}

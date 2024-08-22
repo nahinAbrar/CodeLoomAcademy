@@ -179,7 +179,7 @@ const CourseDetails = ({ data, clientSecret, stripePromise, setRoute, setOpen: o
                                         </div>
                                     </div>
                                     {item.commentReplies.map((item: any, index: number) => (
-                                        <div className='w-full flex 800px:ml-16 my-5 text-black dark:text-white'>
+                                        <div className='w-full flex 800px:ml-16 my-5 text-black dark:text-white' key={index}>
                                             <div>
                                                 <Image
                                                     src={item.user.avatar ? item.user.avatar.url : "https://res.cloudinary.com/dvrsqx37x/image/upload/v1724142586/avatars/ocok4wwjwicc4pacsnqi.png"}

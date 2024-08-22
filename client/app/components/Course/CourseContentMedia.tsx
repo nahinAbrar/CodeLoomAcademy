@@ -208,7 +208,7 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
             {activeBar === 1 && (
                 <div>
                     {data[activeVideo]?.links.map((item: any, index: number) => (
-                        <div className='mb-5'>
+                        <div className='mb-5' key={index}>
                             <h2 className='800px:text-[20px] 800px:inline-block text-black dark:text-white'>
                                 {item.title && item.title + " :"}
                             </h2>
@@ -344,7 +344,7 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
 
                         <div className="w-full">
                             {(courseData?.reviews && [...courseData.reviews].reverse()).map((item: any, index: number) => (
-                                <div className='w-full my-5'>
+                                <div className='w-full my-5' key={index}>
                                     <div className="w-full flex">
                                         <div>
                                             <Image
@@ -400,7 +400,7 @@ const CourseContentMedia = ({ data, id, activeVideo, setActiveVideo, user, refet
                                     )}
 
                                     {item.commentReplies.map((item: any, index: number) => (
-                                        <div className='w-full flex 800px:ml-16 my-5 text-black dark:text-white'>
+                                        <div className='w-full flex 800px:ml-16 my-5 text-black dark:text-white' key={item._id}>
                                             <div>
                                                 <Image
                                                     src={item.user.avatar ? item.user.avatar.url : "https://res.cloudinary.com/dvrsqx37x/image/upload/v1724142586/avatars/ocok4wwjwicc4pacsnqi.png"}

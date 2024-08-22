@@ -1,6 +1,6 @@
 import { useGetAllCoursesQuery } from '@/redux/features/courses/coursesApi'
 import { Box, Toolbar } from '@mui/material'
-import { DataGrid, GridToolbar } from '@mui/x-data-grid'
+import { DataGrid, GridToolbar} from '@mui/x-data-grid'
 import { useTheme } from 'next-themes'
 import React, { FC, useEffect, useState } from 'react'
 import Loader from '../../Loader/Loader'
@@ -159,7 +159,7 @@ const AllInvoices = ({ isDashBoard }: Props) => {
                                 checkboxSelection={isDashBoard ? false : true}
                                 rows={rows}
                                 columns={columns}
-                                components={isDashBoard ? {} : { Toolbar: GridToolbar }}
+                                slots={isDashBoard ? {} : { toolbar: GridToolbar }}
                             />
 
                         </Box>

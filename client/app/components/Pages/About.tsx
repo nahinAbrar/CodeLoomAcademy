@@ -15,17 +15,17 @@ const About = (props: Props) => {
                 <p className="text-[18px] font-serif">
                     Are you ready to elevate your programming skills and unlock new opportunities? Welcome to CodeLoom, the ultimate learning hub for aspiring programmers determined to achieve greatness.
                     <br /><br />
-                    As the founder and CEO of CodeLoom, I understand the hurdles and uncertainties that come with mastering programming. That’s why I established CodeLoom – to empower you with the right tools, knowledge, and support to not just learn but excel in the tech world.
+                    As the founder and CEO of CodeLoom, I understand the hurdles and uncertainties that come with mastering programming. That&apos;s why I established CodeLoom – to empower you with the right tools, knowledge, and support to not just learn but excel in the tech world.
                     <br /><br />
-                    Our YouTube channel is your gateway to a wealth of knowledge, offering videos that cover everything from coding fundamentals to cutting-edge technologies. But the learning doesn’t stop there. Our affordable courses are meticulously crafted to provide a deep and comprehensive education, ensuring you’re fully equipped to thrive in the industry.
+                    Our YouTube channel is your gateway to a wealth of knowledge, offering videos that cover everything from coding fundamentals to cutting-edge technologies. But the learning doesn&apos;t stop there. Our affordable courses are meticulously crafted to provide a deep and comprehensive education, ensuring you&apos;re fully equipped to thrive in the industry.
                     <br /><br />
-                    At CodeLoom, we believe that financial limitations should never stand in the way of your ambitions. That’s why we offer our courses at accessible prices, making high-quality education available to everyone, regardless of their budget.
+                    At CodeLoom, we believe that financial limitations should never stand in the way of your ambitions. That&apos;s why we offer our courses at accessible prices, making high-quality education available to everyone, regardless of their budget.
                     <br /><br />
-                    But what truly sets CodeLoom apart is our vibrant and supportive community. Here, you’re not just a learner – you’re part of a family. Whether you’re a beginner taking your first steps or an experienced coder aiming to sharpen your skills, our community is here to support, inspire, and motivate you every step of the way.
+                    But what truly sets CodeLoom apart is our vibrant and supportive community. Here, you&apos;re not just a learner – you&apos;re part of a family. Whether you&apos;re a beginner taking your first steps or an experienced coder aiming to sharpen your skills, our community is here to support, inspire, and motivate you every step of the way.
                     <br /><br />
-                    With CodeLoom as your partner, the path to your dream career becomes clearer and more achievable. Our courses, resources, and community are all designed to help you unlock your potential and become the programmer you’ve always aspired to be.
+                    With CodeLoom as your partner, the path to your dream career becomes clearer and more achievable. Our courses, resources, and community are all designed to help you unlock your potential and become the programmer you&apos;ve always aspired to be.
                     <br /><br />
-                    So, why wait? Join the CodeLoom family today and let’s revolutionize the tech world together! With our accessible courses, expert guidance, and unwavering community support, the possibilities are endless.
+                    So, why wait? Join the CodeLoom family today and let&apos;s revolutionize the tech world together! With our accessible courses, expert guidance, and unwavering community support, the possibilities are endless.
                 </p>
                 <br />
                 <span className='font-Montserrat'>
