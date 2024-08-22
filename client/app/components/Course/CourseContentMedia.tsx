@@ -500,8 +500,8 @@ const CommentItem = ({ data, item, answer, setAnswer, handleAnswerSubmit, setQue
                 {/**questionID === item._id*/}
                 {replyActive && (
                     <>
-                        {item.questionReplies.map((item: any) => (
-                            <div className='w-full flex 800px:ml-16 my-5 text-black dark:text-white'>
+                        {item.questionReplies.map((item: any, index:number) => (
+                            <div className='w-full flex 800px:ml-16 my-5 text-black dark:text-white' key={index}>
                                 <div>
                                     <Image
                                         src={item.user.avatar ? item.user.avatar.url : "https://res.cloudinary.com/dvrsqx37x/image/upload/v1724142586/avatars/ocok4wwjwicc4pacsnqi.png"}

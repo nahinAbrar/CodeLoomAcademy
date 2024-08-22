@@ -103,7 +103,7 @@ const Reviews = (props: Props) => {
                     </h3>
                     <br />
                     <p className={`${styles.label} font-sans italic`}>
-                        "Our students are the heart of our institution. They consistently impress us with their achievements and dedication. From securing prestigious internships to conducting groundbreaking research, our students are making a real difference in the world. Don't just take our word for it: 'I've never felt so supported in my academic journey,' says John Doe, a Computer Science major. Our small class sizes, personalized attention from faculty, and emphasis on practical skills create an environment where students can thrive. Join our community and discover your full potential."
+                    &quot;Our students are the heart of our institution. They consistently impress us with their achievements and dedication. From securing prestigious internships to conducting groundbreaking research, our students are making a real difference in the world. Don&apos;t just take our word for it: &apos;I&apos;ve never felt so supported in my academic journey,&apos; says John Doe, a Computer Science major. Our small class sizes, personalized attention from faculty, and emphasis on practical skills create an environment where students can thrive. Join our community and discover your full potential.&quot;
                     </p>
                 </div>
             </div>

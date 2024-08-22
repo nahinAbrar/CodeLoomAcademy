@@ -97,7 +97,7 @@ const ProfilePage: FC<Props> = ({ user }) => {
               </div>
               {courses.length === 0 && (
                 <h1 className='text-center text-black dark:text-white text-[18px] font-Montserrat'>
-                  You don't have any purchased courses!
+                  You don&apos;t have any purchased courses!
                 </h1>
               )}
             </div>

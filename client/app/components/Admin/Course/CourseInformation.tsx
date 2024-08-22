@@ -282,7 +282,7 @@ const CourseInformation: FC<Props> = ({ courseInfo, setCourseInfo, active, setAc
                                 />
                             ) : (
                                 <span className='text-black dark:text-white'>
-                                    Pro tip: Don't upload your cat (unless it's the thumbnail).
+                                    Pro tip: Don&apos;t upload your cat (unless it&apos;s the thumbnail).
                                 </span>
                             )
                         }
