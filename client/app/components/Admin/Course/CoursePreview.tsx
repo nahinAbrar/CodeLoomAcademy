@@ -3,7 +3,6 @@ import CoursePlayer from '../../../utils/CoursePlayer'
 import Ratings from '../../../utils/Ratings'
 import { styles } from '../../../../app/styles/style'
 import { IoCheckmarkDoneOutline } from 'react-icons/io5'
-import { createCourse } from '../../../../../server/services/course.service';
 
 type Props = {
     active: number;
