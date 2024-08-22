@@ -8,7 +8,6 @@ import { Description } from '@mui/icons-material';
 import CoursePreview from './CoursePreview';
 import { useCreateCourseMutation, useEditCourseMutation, useGetAllCoursesQuery } from '@/redux/features/courses/coursesApi'; //need to change if not works
 import toast from 'react-hot-toast';
-import { editCourse } from '../../../../../server/controllers/course.controller';
 import { redirect } from 'next/navigation';
 
 type Props = {
