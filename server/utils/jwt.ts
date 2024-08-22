@@ -11,8 +11,8 @@ interface ItokenOptions {
   secure?: boolean;
 }
 
- // parse environment variables to integrate with fallback values
- const accessTokenExpire = parseInt(
+// parse environment variables to integrate with fallback values
+const accessTokenExpire = parseInt(
   process.env.ACCESS_TOKEN_EXPIRE || "300",
   10
 );
@@ -42,9 +42,7 @@ export const sendToken = (user: IUser, statusCode: number, res: Response) => {
   const refreshToken = user.SignRefreshToken();
 
   // upload session to redis
-  redis.set(user._id, JSON.stringify(user) as any);
-
- 
+  redis.set(user._id as string, JSON.stringify(user) as any);
 
   // only set secure to TRUE IN PRODUCTION IN COOKIES
   if (process.env.NODE_ENV === "production") {

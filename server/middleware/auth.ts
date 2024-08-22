@@ -2,25 +2,25 @@ require("dotenv").config();
 import { NextFunction, Request, Response } from "express";
 import { CatchAsyncError } from "../middleware/catchAsyncErrors";
 import ErrorHandler from "../utils/ErrorHandler";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { redis } from "../utils/redis";
 import { updateAccessToken } from "../controllers/user.controller";
 
 // user authentication
 export const isAutheticated = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
-    const access_token = req.cookies.access_token;
+    const access_token = req.cookies.access_token as string;
 
     if (!access_token) {
       return next(
-        new ErrorHandler("Please Login to access this resource", 400)
+        new ErrorHandler(
+          "Please Login to access this resource || from us authenticated",
+          400
+        )
       );
     }
 
-    const decoded = jwt.verify(
-      access_token,
-      process.env.ACCESS_TOKEN as string
-    );
+    const decoded = jwt.decode(access_token) as JwtPayload;
 
     if (!decoded) {
       return next(new ErrorHandler("Access Token is not valid", 400));
