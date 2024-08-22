@@ -106,6 +106,7 @@ const CreateCourse = (props: Props) => {
 
 
         setCourseData(data);
+        console.log(data)
     }
 
     

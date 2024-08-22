@@ -82,6 +82,7 @@ const EditCourse: FC<Props> = ({ id }) => {
             title: "",
             description: "",
             videoSection: "",
+            videoLength: "",
             links: [
                 {
                     title: "",
@@ -103,6 +104,7 @@ const EditCourse: FC<Props> = ({ id }) => {
             videoUrl: courseContent.videoUrl,
             title: courseContent.title,
             description: courseContent.description,
+            videolength: courseContent.videoLength,
             videoSection: courseContent.videoSection,
             links: courseContent.links.map((link) => ({
                 title: link.title,
@@ -131,6 +133,7 @@ const EditCourse: FC<Props> = ({ id }) => {
 
 
         setCourseData(data);
+        console.log(data)
     }
 
     console.log(courseData)
