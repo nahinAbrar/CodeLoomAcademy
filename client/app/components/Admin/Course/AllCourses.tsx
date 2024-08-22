@@ -8,7 +8,6 @@ import { useDeleteCourseMutation, useGetAllCoursesQuery } from '@/redux/features
 import Loader from '../../Loader/Loader'
 import { format } from "timeago.js"
 import { styles } from '@/app/styles/style'
-import { deleteCourse } from '../../../../../server/controllers/course.controller';
 import toast from 'react-hot-toast'
 import Link from 'next/link'
 
