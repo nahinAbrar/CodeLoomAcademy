@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import ProfileInfo from './ProfileInfo';
 import ChangePassword from './ChangePassword';
 import CourseCard from '../Course/CourseCard';
-import { useGetAllCoursesQuery } from '@/redux/features/courses/coursesApi';
+import { useGetUserAllCoursesQuery } from '@/redux/features/courses/coursesApi';
 
 type Props = {
   user: any;
@@ -20,7 +20,7 @@ const ProfilePage: FC<Props> = ({ user }) => {
 
   const [active, setActive] = useState(1);
 
-  const { data, isLoading } = useGetAllCoursesQuery(undefined, {})
+  const { data, isLoading } = useGetUserAllCoursesQuery(undefined, {})
 
   const [logout, setLogout] = useState(false);
   const { } = useLogoutQuery(undefined, {

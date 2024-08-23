@@ -1,5 +1,5 @@
 'use client'
-import { useGetAllCoursesQuery } from '@/redux/features/courses/coursesApi'
+import { useGetUserAllCoursesQuery } from '@/redux/features/courses/coursesApi'
 import { useGetHeroDataQuery } from '@/redux/features/layout/layoutApi'
 import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -22,7 +22,7 @@ const Page = (props: Props) => {
     const [category, setCategory] = useState("All")
 
 
-    const { data, isLoading } = useGetAllCoursesQuery(undefined, {})
+    const { data, isLoading } = useGetUserAllCoursesQuery(undefined, {})
     const { data: categoriesData } = useGetHeroDataQuery("Categories", {})
 
 
