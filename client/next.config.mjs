@@ -1,12 +1,29 @@
-/** @type {import('next').NextConfig} */
+/**
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
+    // images: {
+    //    domains: ['res.cloudinary.com', 'randomuser.me', 'lottie.host', 'see.fontimg.com'],
+    //}, 
     images: {
-        domains: ['res.cloudinary.com', 'randomuser.me', 'lottie.host', 'see.fontimg.com'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'res.cloudinary.com',
+                pathname: '**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'randomuser.me',
+                pathname: '**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'see.fontimg.com',
+                pathname: '**',
+            },
+        ],
     },
-    experimental: {
-        reachRoot: true,
-        suppressHydrationWarning: true,
-    }
 };
 
 export default nextConfig;

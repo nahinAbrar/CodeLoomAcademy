@@ -40,7 +40,7 @@ const DashboardHeader: FC<Props> = () => {
             }
         }
         audio.load()
-    }, [data, isSuccess])
+    }, [data, isSuccess,audio,error,refetch])
 
 
     useEffect(() => {
