@@ -64,7 +64,7 @@ const AllUsers: FC<Props> = ({ isTeam }) => {
         }
 
 
-    }, [updateError, updateSuccess, deleteSuccess, deleteError])
+    }, [updateError, updateSuccess, deleteSuccess, deleteError, refetch])
 
 
 
