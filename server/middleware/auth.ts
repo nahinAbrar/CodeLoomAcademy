@@ -14,7 +14,7 @@ export const isAutheticated = CatchAsyncError(
     if (!access_token) {
       return next(
         new ErrorHandler(
-          "Please Login to access this resource || from us authenticated",
+          "Login Needed || IsAuthenticated Middleware",
           400
         )
       );
