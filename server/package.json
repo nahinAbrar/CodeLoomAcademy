@@ -10,8 +10,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --transpile-only server.ts",
-    "start": "node build/server.js",
-    "build": "tsc"
+    "start": "nodemon build/server.js",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add dist",
+    "build": "rimraf dist && tsc"
   },
   "author": "nahinAbrar",
   "license": "ISC",
@@ -47,5 +49,10 @@
   "devDependencies": {
     "@types/ejs": "^3.1.5",
     "@types/nodemailer": "^6.4.15"
-  }
+  },
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
+]
 }
