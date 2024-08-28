@@ -10,10 +10,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --transpile-only server.ts",
-    "start": "nodemon build/server.js",
-    "ts.check": "tsc --project tsconfig.json",
-    "add-build": "git add dist",
-    "build": "rimraf dist && tsc"
+    "start": "node dist/server.js",
+    "build": "tsc"
   },
   "author": "nahinAbrar",
   "license": "ISC",
@@ -54,5 +52,5 @@
     "ts.check",
     "build",
     "add-build"
-]
+  ]
 }
